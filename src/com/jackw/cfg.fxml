@@ -33,7 +33,7 @@
                               </ContextMenu>
                            </contextMenu>
                         </TableView>
-                        <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="123.0">
+                        <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="141.0">
                            <contextMenu>
                               <ContextMenu>
                                 <items>
@@ -41,7 +41,7 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu></ListView>
-                        <ListView fx:id="list2" layoutX="164.0" layoutY="116.0" prefHeight="230.0" prefWidth="119.0">
+                        <ListView fx:id="list2" layoutX="181.0" layoutY="117.0" prefHeight="230.0" prefWidth="142.0">
                            <contextMenu>
                               <ContextMenu>
                                 <items>
@@ -56,7 +56,8 @@
                            </padding></Label>
                         <Button fx:id="btnReloadApiJar" layoutX="122.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Reload" />
                         <Label layoutX="196.0" layoutY="18.0" text="Path:" />
-                        <Label layoutX="25.0" layoutY="88.0" text="Label" />
+                        <Label layoutX="25.0" layoutY="88.0" text="API Interfaces" />
+                        <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
                      </children>
                   </AnchorPane>
                </content></Tab>
