@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.Controller">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="paneInterfaces" text="Interfaces">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="table1" layoutX="357.0" layoutY="88.0" prefHeight="259.0" prefWidth="217.0">
+                          <columns>
+                            <TableColumn fx:id="apiClass" prefWidth="114.0" text="API Interface" />
+                            <TableColumn fx:id="clientClass" prefWidth="102.0" text="Client Class" />
+                          </columns>
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem fx:id="menuitem_unlink" mnemonicParsing="false" onAction="#onAction" text="Unlink" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </TableView>
+                        <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="123.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem fx:id="menuitem_link_api_interface" mnemonicParsing="false" onAction="#onAction" text="Link to selected client class" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu></ListView>
+                        <ListView fx:id="list2" layoutX="164.0" layoutY="116.0" prefHeight="230.0" prefWidth="119.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem fx:id="menuitem_link_class" mnemonicParsing="false" onAction="#onAction" text="Link to selected API Interface" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu></ListView>
+                        <Button fx:id="btnLoadApiJar" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load API Jar" />
+                        <Label fx:id="lblApiPath" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="340.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding></Label>
+                        <Button fx:id="btnReloadApiJar" layoutX="122.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Reload" />
+                        <Label layoutX="196.0" layoutY="18.0" text="Path:" />
+                        <Label layoutX="25.0" layoutY="88.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+          <Tab text="Getters" />
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
