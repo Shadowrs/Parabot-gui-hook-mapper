@@ -68,8 +68,8 @@ public class Controller {
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
 			x == null ? "API Interface class" : "Client class")).showError();
 		} else {
-			table1.getItems().add(new PbLink(x.toString(), c.name));
-			System.out.println("added new PbLink. Total now "+table1.getItems().size());
+			table1.getItems().add(new PbLink(x.getO().getClass().getSimpleName(), c.name));
+			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 		}
 	}
 
@@ -101,8 +101,10 @@ public class Controller {
 
 	@FXML public void initialize() {
 		System.out.println("initialzing!");
+
 		apiClass.setCellValueFactory(new PropertyValueFactory<>("apiClass"));
 		clientClass.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
+
 		list1.setCellFactory(new Callback<>() {
 			@Override
 			public ListCell<ListEntryAdapter<ApiData.ApiInterface>> call(ListView<ListEntryAdapter<ApiData.ApiInterface>> param) {
@@ -112,6 +114,20 @@ public class Controller {
 						if (item == null) return;
 						super.updateItem(item, empty);
 						setText(item.getO().getClass().getSimpleName());
+					}
+				};
+			}
+		});
+
+		list2.setCellFactory(new Callback<>() {
+			@Override
+			public ListCell<ApiData.ClientEntry> call(ListView<ApiData.ClientEntry> param) {
+				return new ListCell<>() {
+					@Override
+					protected void updateItem(ApiData.ClientEntry item, boolean empty) {
+						if (item == null) return;
+						super.updateItem(item, empty);
+						setText(item.name);
 					}
 				};
 			}

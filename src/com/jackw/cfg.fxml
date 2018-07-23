@@ -49,15 +49,25 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu></ListView>
-                        <Button fx:id="btnLoadApiJar" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load API Jar" />
-                        <Label fx:id="lblApiPath" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="340.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
+                        <Button fx:id="btnLoadApiJar" layoutX="78.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Select JAR" />
+                        <Label fx:id="lblApiPath" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
                            <padding>
                               <Insets right="5.0" />
                            </padding></Label>
-                        <Button fx:id="btnReloadApiJar" layoutX="122.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Reload" />
-                        <Label layoutX="196.0" layoutY="18.0" text="Path:" />
+                        <Button fx:id="btnReloadApiJar" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR" />
+                        <Label layoutX="226.0" layoutY="18.0" text="Path:" />
                         <Label layoutX="25.0" layoutY="88.0" text="API Interfaces" />
                         <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
+                        <Button layoutX="78.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select JAR" />
+                        <Label layoutX="226.0" layoutY="53.0" text="Path:" />
+                        <Label fx:id="lblApiPath1" layoutX="263.0" layoutY="53.0" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <Button fx:id="btnReloadApiJar1" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR" />
+                        <Label layoutX="14.0" layoutY="18.0" text="API:" />
+                        <Label layoutX="14.0" layoutY="53.0" text="Client:" />
                      </children>
                   </AnchorPane>
                </content></Tab>
