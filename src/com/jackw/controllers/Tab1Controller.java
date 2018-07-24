@@ -1,5 +1,6 @@
 package com.jackw.controllers;
 
+import com.jackw.ControllerKey;
 import com.jackw.ManualMapper;
 import com.jackw.logic.*;
 import java.io.File;
@@ -18,25 +19,32 @@ import org.controlsfx.control.Notifications;
 
 public class Tab1Controller {
 
-	@FXML private Label lblApiPath;
-	@FXML private Label lblApiPath1;
-	@FXML private Button select_jar_api;
-	@FXML private Button select_jar_client;
-	@FXML private Button load_jar_api;
-	@FXML private Button load_jar_client;
-	@FXML private ListView<ListEntryAdapter<ApiInterface>> list1;
-	@FXML private ListView<ClientEntry> list2;
-	@FXML private TableView<PbLink> table1;
-	@FXML MenuItem menuitem_link_api_interface;
-	@FXML MenuItem menuitem_link_class;
-	@FXML TableColumn<PbLink, String> apiClass;
-	@FXML TableColumn<PbLink, String> clientClass;
+	@FXML public Label lblApiPath;
+	@FXML public Label lblApiPath1;
+	@FXML public Button select_jar_api;
+	@FXML public Button select_jar_client;
+	@FXML public Button load_jar_api;
+	@FXML public Button load_jar_client;
+	@FXML public ListView<ListEntryAdapter<ApiInterface>> list1;
+	@FXML public ListView<ClientEntry> list2;
+	@FXML public TableView<PbLink> table1;
+	@FXML public MenuItem menuitem_link_api_interface;
+	@FXML public MenuItem menuitem_link_class;
+	@FXML public TableColumn<PbLink, String> apiClass;
+	@FXML public TableColumn<PbLink, String> clientClass;
 	@FXML public Tab tab_interfaces;
 	@FXML public Tab tab_getters;
-	@FXML Tooltip tt_clientjarpath;
-	@FXML Tooltip tt_apijarpath;
+	@FXML public Tooltip tt_clientjarpath;
+	@FXML public Tooltip tt_apijarpath;
+	@FXML public TabPane tabpane1;
 
-	private ApiData data = new ApiData();
+	public void setMain(ManualMapper main, ApiData data) {
+		this.main = main;
+		this.data = data;
+	}
+
+	private ManualMapper main;
+	private ApiData data;
 
 	@FXML
 	void onAction(ActionEvent e) {
@@ -85,7 +93,7 @@ public class Tab1Controller {
 
 	private void onLoadJar() {
 		if (data.pbApi != null && data.client != null) {
-			Tab2Getters ctrl = (Tab2Getters) ManualMapper.controllers.get(ManualMapper.CTRLS.TAB2);
+			Tab2Getters ctrl = (Tab2Getters) ManualMapper.controllers.get(ControllerKey.TAB2);
 			ctrl.unlockPanel();
 		}
 	}
@@ -187,38 +195,14 @@ public class Tab1Controller {
 			return row ;
 		});
 
+		tabpane1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == tab_getters) {
+				main.tab2().onTabOpened();
+			}
+		});
+
 		// We're ready
 		System.out.println("ready");
 	}
 
-	public class ListEntryAdapter<T> {
-		private final SimpleStringProperty e; // TODO could actually just be a string i think
-		// no need for this wrapper
-		private T o;
-
-		ListEntryAdapter(String display, T o) {
-			e = new SimpleStringProperty(display);
-			this.o = o;
-		}
-
-		public String getE() {
-			return e.get();
-		}
-
-		public SimpleStringProperty eProperty() {
-			return e;
-		}
-
-		public void setE(String e) {
-			this.e.set(e);
-		}
-
-		public T getO() {
-			return o;
-		}
-
-		public void setO(T o) {
-			this.o = o;
-		}
-	}
 }

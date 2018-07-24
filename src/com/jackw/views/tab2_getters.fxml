@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchor_pane_root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Getters">
    <children>
-      <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Steps: " />
-      <Label fx:id="label_steps" layoutX="71.0" layoutY="36.0" text="Select an associated accessor (api interface)" />
       <Label fx:id="label_locked" alignment="CENTER" layoutX="68.0" layoutY="157.0" prefHeight="98.0" prefWidth="464.0" text="You must load a Parabot API JAR &#10;and a Client JAR to unlock this tab" textAlignment="CENTER">
          <font>
-            <Font name="Berlin Sans FB Bold" size="20.0" />
+            <Font name="Berlin Sans FB" size="20.0" />
          </font>
       </Label>
+      <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Steps: " />
+      <Label fx:id="label_steps" layoutX="71.0" layoutY="36.0" text="Select an associated accessor (api interface)" />
       <Label layoutX="36.0" layoutY="71.0" text="1. Accessor: " />
-      <ChoiceBox fx:id="accessorChoice" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
-      <Label layoutX="36.0" layoutY="105.0" text="2. Available API methods:" />
-      <ChoiceBox layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="box_accessor" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="105.0" text="2. Available API fields:" />
+      <ChoiceBox fx:id="box_api_fields" disable="true" layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
       <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
       <TextField editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
       <Label layoutX="36.0" layoutY="140.0" text="3. Available Client Fields by Type:" />
-      <ChoiceBox layoutX="225.0" layoutY="136.0" prefHeight="25.0" prefWidth="271.0" />
+      <ChoiceBox fx:id="box_client_fields" disable="true" layoutX="225.0" layoutY="136.0" prefHeight="25.0" prefWidth="271.0" />
+      <Label layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Fields:" />
+      <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="225.0" layoutY="172.0" prefHeight="25.0" prefWidth="271.0" />
+      <Button fx:id="button_bind_getter" layoutX="508.0" layoutY="149.0" mnemonicParsing="false" text="Bind Getter" />
+      <Separator layoutY="208.0" prefHeight="3.0" prefWidth="601.0" />
+      <Label layoutX="26.0" layoutY="238.0" text="Existing Getter&#10;bindings" />
+      <TableView layoutX="111.0" layoutY="221.0" prefHeight="179.0" prefWidth="476.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

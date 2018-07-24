@@ -1,6 +1,11 @@
 package com.jackw.controllers;
 
+import com.jackw.ManualMapper;
 import com.jackw.logic.ApiInterface;
+import com.jackw.logic.JavaField;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -8,11 +13,20 @@ import javafx.scene.layout.AnchorPane;
 
 public class Tab2Getters {
 
-	@FXML Label label_steps;
-	@FXML Label label_steps_fixed;
-	@FXML Label label_locked;
-	@FXML AnchorPane anchor_pane_root;
-	@FXML ChoiceBox<ApiInterface> accessorChoice;
+	@FXML public Label label_steps;
+	@FXML public Label label_steps_fixed;
+	@FXML public Label label_locked;
+	@FXML public AnchorPane anchor_pane_root;
+	@FXML public ChoiceBox<ApiInterface> box_accessor;
+	@FXML public ChoiceBox<JavaField> box_api_fields;
+	@FXML public ChoiceBox<ApiInterface> box_client_fields;
+	@FXML public ChoiceBox<ApiInterface> box_client_all_fields;
+
+	public void setMain(ManualMapper main) {
+		this.main = main;
+	}
+
+	private ManualMapper main;
 
 	@FXML
 	public void initialize() {
@@ -23,6 +37,21 @@ public class Tab2Getters {
 			}
 		});
 		System.out.println("set all components on this anchor pane to disabled + opacity=0.15");
+
+		box_accessor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			box_api_fields.setDisable(false);
+			box_api_fields.setItems(FXCollections.observableArrayList(newValue.entries));
+			//main.tab1().table1.getItems().filtered(pbLink -> pbLink.getApiClass()); // TODO
+		});
+
+		box_api_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			box_client_fields.setDisable(false);
+			box_client_fields.setItems(FXCollections.observableArrayList());
+			box_client_all_fields.setDisable(false);
+			box_client_all_fields.setItems(FXCollections.observableArrayList());
+		});
+		System.out.println("[Tab2 Controller] Init complete");
+
 	}
 
 	public void unlockPanel() {
@@ -33,5 +62,13 @@ public class Tab2Getters {
 				c.setOpacity(1);
 			}
 		});
+	}
+
+	@FXML void onAction(ActionEvent e) {
+		System.out.println(e.toString());
+	}
+
+	public void onTabOpened() {
+		box_accessor.setItems(FXCollections.observableArrayList(main.tab1().list1.getItems().stream().map(e -> e.o).collect(Collectors.toList())));
 	}
 }
