@@ -3,13 +3,13 @@ package com.jackw.controllers;
 import com.jackw.ManualMapper;
 import com.jackw.logic.ApiInterface;
 import com.jackw.logic.JavaField;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 
 public class Tab2Getters {
 
@@ -37,6 +37,18 @@ public class Tab2Getters {
 			}
 		});
 		System.out.println("set all components on this anchor pane to disabled + opacity=0.15");
+
+		box_accessor.setConverter(new StringConverter<>() {
+			@Override
+			public String toString(ApiInterface object) {
+				return object.name;
+			}
+
+			@Override
+			public ApiInterface fromString(String string) {
+				return box_accessor.getItems().filtered(apiInterface -> apiInterface.name.equals(string)).get(0);
+			}
+		});
 
 		box_accessor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			box_api_fields.setDisable(false);
@@ -69,6 +81,6 @@ public class Tab2Getters {
 	}
 
 	public void onTabOpened() {
-		box_accessor.setItems(FXCollections.observableArrayList(main.tab1().list1.getItems().stream().map(e -> e.o).collect(Collectors.toList())));
+		box_accessor.setItems(FXCollections.observableArrayList(main.tab1().list1.getItems()));
 	}
 }

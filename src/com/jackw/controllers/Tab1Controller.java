@@ -4,9 +4,7 @@ import com.jackw.ControllerKey;
 import com.jackw.ManualMapper;
 import com.jackw.logic.*;
 import java.io.File;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -25,7 +23,7 @@ public class Tab1Controller {
 	@FXML public Button select_jar_client;
 	@FXML public Button load_jar_api;
 	@FXML public Button load_jar_client;
-	@FXML public ListView<ListEntryAdapter<ApiInterface>> list1;
+	@FXML public ListView<ApiInterface> list1;
 	@FXML public ListView<ClientEntry> list2;
 	@FXML public TableView<InterfaceBind> table1;
 	@FXML public MenuItem menuitem_link_api_interface;
@@ -63,10 +61,7 @@ public class Tab1Controller {
 			if (data.pbApi == null) {
 				lblApiPath.setText("No Api JAR selected!");
 			} else {
-				List<ListEntryAdapter<ApiInterface>> list = data.pbApi.interfaces.stream()
-						.map(i -> new ListEntryAdapter<>(i.getClass().getName(), i))
-						.collect(Collectors.toList());
-				list1.setItems(FXCollections.observableArrayList(list));
+				list1.setItems(FXCollections.observableArrayList(data.pbApi.interfaces));
 				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
 				onLoadJar();
@@ -99,14 +94,14 @@ public class Tab1Controller {
 	}
 
 	private void link() {
-		ListEntryAdapter<ApiInterface> x = list1.getSelectionModel().getSelectedItem();
+		ApiInterface x = list1.getSelectionModel().getSelectedItem();
 		ClientEntry c = list2.getSelectionModel().getSelectedItem();
 		if (x == null || c == null) {
 			System.out.println("bad selection");
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
 			x == null ? "API Interface class" : "Client class")).showError();
 		} else {
-			table1.getItems().add(new InterfaceBind(x.getO(), c));
+			table1.getItems().add(new InterfaceBind(x, c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 		}
 	}
@@ -116,7 +111,7 @@ public class Tab1Controller {
 		private final SimpleStringProperty clientClass;
 
 		public InterfaceBind(ApiInterface apiInterface, ClientEntry clientEntry) {
-			apiClass = new SimpleStringProperty(apiInterface.getClass().getSimpleName());
+			apiClass = new SimpleStringProperty(apiInterface.name);
 			clientClass = new SimpleStringProperty(clientEntry.name);
 		}
 
@@ -145,13 +140,13 @@ public class Tab1Controller {
 
 		list1.setCellFactory(new Callback<>() {
 			@Override
-			public ListCell<ListEntryAdapter<ApiInterface>> call(ListView<ListEntryAdapter<ApiInterface>> param) {
+			public ListCell<ApiInterface> call(ListView<ApiInterface> param) {
 				return new ListCell<>() {
 					@Override
-					protected void updateItem(ListEntryAdapter<ApiInterface> item, boolean empty) {
+					protected void updateItem(ApiInterface item, boolean empty) {
 						if (item == null) return;
 						super.updateItem(item, empty);
-						setText(item.getO().getClass().getSimpleName());
+						setText(item.name);
 					}
 				};
 			}

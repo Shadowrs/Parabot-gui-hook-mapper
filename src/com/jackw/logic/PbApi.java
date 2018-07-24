@@ -13,9 +13,9 @@ public class PbApi {
 		this.apiData = apiData;
 		this.apiJar = file;
 		interfaces = new ArrayList<>(List.of(
-				new ApiInterface(apiData),
-				new ApiInterface(apiData),
-				new ApiInterface(apiData)
+				new ApiInterface("Player"),
+				new ApiInterface("Character"),
+				new ApiInterface("NPC")
 		));
 	}
 }

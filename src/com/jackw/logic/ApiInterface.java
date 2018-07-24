@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ApiInterface {
 
-	private ApiData apiData;
+	public String name;
 
 	public List<JavaField> entries = new ArrayList<>(List.of(
 			new JavaField("getX()"),
@@ -13,7 +13,7 @@ public class ApiInterface {
 			new JavaField("getZ()")
 	));
 
-	public ApiInterface(ApiData apiData) {
-		this.apiData = apiData;
+	public ApiInterface(String name) {
+		this.name = name;
 	}
 }
