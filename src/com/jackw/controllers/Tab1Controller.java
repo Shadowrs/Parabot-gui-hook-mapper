@@ -1,6 +1,5 @@
 package com.jackw.controllers;
 
-import com.jackw.ControllerKey;
 import com.jackw.ManualMapper;
 import com.jackw.logic.*;
 import java.io.File;
@@ -87,10 +86,6 @@ public class Tab1Controller {
 	}
 
 	private void onLoadJar() {
-		if (data.pbApi != null && data.client != null) {
-			Tab2Getters ctrl = (Tab2Getters) ManualMapper.controllers.get(ControllerKey.TAB2);
-			ctrl.unlockPanel();
-		}
 	}
 
 	private void link() {
@@ -103,6 +98,7 @@ public class Tab1Controller {
 		} else {
 			table1.getItems().add(new InterfaceBind(x, c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
+			main.tab2().unlockPanel();
 		}
 	}
 

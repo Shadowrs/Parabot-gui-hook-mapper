@@ -17,14 +17,13 @@
             <Font name="Berlin Sans FB" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Steps: " />
-      <Label fx:id="label_steps" layoutX="71.0" layoutY="36.0" text="Select an associated accessor (api interface)" />
+      <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Follow the numbered labels to assign a API Getter to a Client Field " />
       <Label layoutX="36.0" layoutY="71.0" text="1. Accessor: " />
       <ChoiceBox fx:id="box_accessor" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
       <Label layoutX="36.0" layoutY="105.0" text="2. Available API fields:" />
       <ChoiceBox fx:id="box_api_fields" disable="true" layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
       <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
-      <TextField editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
+      <TextField fx:id="txt_client_class" editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
       <Label layoutX="36.0" layoutY="140.0" text="3. Available Client Fields by Type:" />
       <ChoiceBox fx:id="box_client_fields" disable="true" layoutX="225.0" layoutY="136.0" prefHeight="25.0" prefWidth="271.0" />
       <Label layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Fields:" />
