@@ -32,7 +32,7 @@
       <Button fx:id="button_bind_getter" layoutX="508.0" layoutY="149.0" mnemonicParsing="false" text="Bind Getter" />
       <Separator layoutY="208.0" prefHeight="3.0" prefWidth="601.0" />
       <Label layoutX="26.0" layoutY="238.0" text="Existing Getter&#10;bindings" />
-      <TableView layoutX="111.0" layoutY="221.0" prefHeight="179.0" prefWidth="476.0">
+      <TableView layoutX="111.0" layoutY="221.0" prefHeight="165.0" prefWidth="476.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />

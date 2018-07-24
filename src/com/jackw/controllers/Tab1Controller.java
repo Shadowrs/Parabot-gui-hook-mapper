@@ -27,11 +27,11 @@ public class Tab1Controller {
 	@FXML public Button load_jar_client;
 	@FXML public ListView<ListEntryAdapter<ApiInterface>> list1;
 	@FXML public ListView<ClientEntry> list2;
-	@FXML public TableView<PbLink> table1;
+	@FXML public TableView<InterfaceBind> table1;
 	@FXML public MenuItem menuitem_link_api_interface;
 	@FXML public MenuItem menuitem_link_class;
-	@FXML public TableColumn<PbLink, String> apiClass;
-	@FXML public TableColumn<PbLink, String> clientClass;
+	@FXML public TableColumn<InterfaceBind, String> column1_apiInterClass;
+	@FXML public TableColumn<InterfaceBind, String> column2_clientClass;
 	@FXML public Tab tab_interfaces;
 	@FXML public Tab tab_getters;
 	@FXML public Tooltip tt_clientjarpath;
@@ -106,18 +106,18 @@ public class Tab1Controller {
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
 			x == null ? "API Interface class" : "Client class")).showError();
 		} else {
-			table1.getItems().add(new PbLink(x.getO().getClass().getSimpleName(), c.name));
+			table1.getItems().add(new InterfaceBind(x.getO(), c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 		}
 	}
 
-	public static class PbLink {
+	public static class InterfaceBind {
 		private final SimpleStringProperty apiClass;
 		private final SimpleStringProperty clientClass;
 
-		public PbLink(String c1, String c2) {
-			apiClass = new SimpleStringProperty(c1);
-			clientClass = new SimpleStringProperty(c2);
+		public InterfaceBind(ApiInterface apiInterface, ClientEntry clientEntry) {
+			apiClass = new SimpleStringProperty(apiInterface.getClass().getSimpleName());
+			clientClass = new SimpleStringProperty(clientEntry.name);
 		}
 
 		public String getApiClass() {
@@ -140,8 +140,8 @@ public class Tab1Controller {
 	@FXML public void initialize() {
 		System.out.println("initialzing!");
 
-		apiClass.setCellValueFactory(new PropertyValueFactory<>("apiClass"));
-		clientClass.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
+		column1_apiInterClass.setCellValueFactory(new PropertyValueFactory<>("apiClass"));
+		column2_clientClass.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
 
 		list1.setCellFactory(new Callback<>() {
 			@Override
@@ -175,7 +175,7 @@ public class Tab1Controller {
 
 		// Configure context menu of a selected item
 		table1.setRowFactory(tv -> {
-			TableRow<PbLink> row = new TableRow<>();
+			TableRow<InterfaceBind> row = new TableRow<>();
 			ContextMenu menu = new ContextMenu();
 
 			row.setOnContextMenuRequested((event) -> {
