@@ -59,7 +59,7 @@
                            <tooltip>
                               <Tooltip text="Client JAR classes appear here" />
                            </tooltip></ListView>
-                        <Button fx:id="btnLoadApiJar" layoutX="78.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Select JAR">
+                        <Button fx:id="select_jar_api" layoutX="78.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Select JAR">
                            <tooltip>
                               <Tooltip text="Browse for a Parabot-api.jar" />
                            </tooltip></Button>
@@ -67,14 +67,14 @@
                            <padding>
                               <Insets right="5.0" />
                            </padding></Label>
-                        <Button fx:id="btnReloadApiJar" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
+                        <Button fx:id="load_jar_api" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
                            <tooltip>
                               <Tooltip text="Click Load once you have selected a JAR" />
                            </tooltip></Button>
                         <Label layoutX="226.0" layoutY="18.0" text="Path:" />
                         <Label layoutX="25.0" layoutY="88.0" text="API Interfaces" />
                         <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
-                        <Button layoutX="78.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
+                        <Button fx:id="select_jar_client" layoutX="78.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
                            <tooltip>
                               <Tooltip text="Browse for a RSPS client JAR" />
                            </tooltip>
@@ -85,7 +85,7 @@
                               <Insets right="5.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="btnReloadApiJar1" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
+                        <Button fx:id="load_jar_client" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
                            <tooltip>
                               <Tooltip text="Click Load once you select a JAR" />
                            </tooltip>
