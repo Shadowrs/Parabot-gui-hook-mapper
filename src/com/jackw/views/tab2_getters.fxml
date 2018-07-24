@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor_pane_root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Getters">
+   <children>
+      <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Steps: " />
+      <Label fx:id="label_steps" layoutX="71.0" layoutY="36.0" text="Select an associated accessor (api interface)" />
+      <Label fx:id="label_locked" alignment="CENTER" layoutX="68.0" layoutY="157.0" prefHeight="98.0" prefWidth="464.0" text="You must load a Parabot API JAR &#10;and a Client JAR to unlock this tab" textAlignment="CENTER">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

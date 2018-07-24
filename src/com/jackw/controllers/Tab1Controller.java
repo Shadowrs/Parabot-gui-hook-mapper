@@ -1,4 +1,4 @@
-package com.jackw;
+package com.jackw.controllers;
 
 import com.jackw.logic.ApiData;
 import java.util.List;
@@ -14,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
-public class Controller {
+public class Tab1Controller {
 
 	@FXML private Label lblApiPath;
 	@FXML private Button btnLoadApiJar;
@@ -26,6 +26,8 @@ public class Controller {
 	@FXML MenuItem menuitem_link_class;
 	@FXML TableColumn<PbLink, String> apiClass;
 	@FXML TableColumn<PbLink, String> clientClass;
+	@FXML public Tab tab_interfaces;
+	@FXML public Tab tab_getters;
 
 	private ApiData data;
 
@@ -132,6 +134,32 @@ public class Controller {
 				};
 			}
 		});
+
+		final MenuItem test = new MenuItem("test");
+
+		// Configure context menu of a selected item
+		table1.setRowFactory(tv -> {
+			TableRow<PbLink> row = new TableRow<>();
+			ContextMenu menu = new ContextMenu();
+
+			row.setOnContextMenuRequested((event) -> {
+				if(! row.isEmpty()) {
+					if(! row.getContextMenu().getItems().contains(test)) {
+						row.getContextMenu().getItems().add(0, test);
+					}
+				}
+			});
+
+			row.itemProperty().addListener((obs, oldItem, newItem) -> {
+
+			});
+
+			row.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) ->
+					row.setContextMenu(isNowEmpty ? null : menu));
+			return row ;
+		});
+
+		// We're ready
 		System.out.println("ready");
 	}
 

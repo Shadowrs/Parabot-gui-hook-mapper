@@ -13,11 +13,11 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="paneInterfaces" text="Interfaces">
+          <Tab fx:id="tab_interfaces" text="Interfaces">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -98,7 +98,7 @@
                <tooltip>
                   <Tooltip text="Here you can customize the hooks file &lt;interfaces&gt; entries binding &lt;interface&gt; to &lt;class&gt;" />
                </tooltip></Tab>
-          <Tab text="Getters" />
+          <Tab fx:id="tab_getters" text="Getters" />
         </tabs>
       </TabPane>
    </children>
