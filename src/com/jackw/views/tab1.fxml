@@ -21,7 +21,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="table1" layoutX="357.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="259.0" prefWidth="217.0">
+                        <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="217.0">
                           <columns>
                             <TableColumn fx:id="column1_apiInterClass" prefWidth="114.0" text="API Interface" />
                             <TableColumn fx:id="column2_clientClass" prefWidth="102.0" text="Client Class" />
@@ -101,6 +101,7 @@
                         </Button>
                         <Label layoutX="14.0" layoutY="18.0" text="API:" />
                         <Label layoutX="14.0" layoutY="53.0" text="Client:" />
+                        <Label layoutX="357.0" layoutY="88.0" text="API Interface to Client Class Bindings" />
                      </children>
                   </AnchorPane>
                </content>

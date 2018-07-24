@@ -7,7 +7,7 @@ public class ApiInterface {
 
 	public String name;
 
-	public List<JavaField> entries = new ArrayList<>(List.of(
+	public List<JavaField> fields = new ArrayList<>(List.of(
 			new JavaField("getX()"),
 			new JavaField("getY()"),
 			new JavaField("getZ()")
