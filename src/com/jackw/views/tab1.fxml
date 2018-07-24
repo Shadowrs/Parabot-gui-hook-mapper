@@ -21,7 +21,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="table1" layoutX="357.0" layoutY="88.0" prefHeight="259.0" prefWidth="217.0">
+                        <TableView fx:id="table1" layoutX="357.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="259.0" prefWidth="217.0">
                           <columns>
                             <TableColumn fx:id="apiClass" prefWidth="114.0" text="API Interface" />
                             <TableColumn fx:id="clientClass" prefWidth="102.0" text="Client Class" />
@@ -36,6 +36,9 @@
                            <tooltip>
                               <Tooltip text="Hook file &lt;interface&gt; entry for a class and api interface" />
                            </tooltip>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="141.0">
                            <contextMenu>
@@ -66,7 +69,10 @@
                         <Label fx:id="lblApiPath" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
                            <padding>
                               <Insets right="5.0" />
-                           </padding></Label>
+                           </padding>
+                           <tooltip>
+                              <Tooltip fx:id="tt_apijarpath" text="JAR not loaded" />
+                           </tooltip></Label>
                         <Button fx:id="load_jar_api" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
                            <tooltip>
                               <Tooltip text="Click Load once you have selected a JAR" />
@@ -84,6 +90,9 @@
                            <padding>
                               <Insets right="5.0" />
                            </padding>
+                           <tooltip>
+                              <Tooltip fx:id="tt_clientjarpath" text="JAR not loaded" />
+                           </tooltip>
                         </Label>
                         <Button fx:id="load_jar_client" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
                            <tooltip>

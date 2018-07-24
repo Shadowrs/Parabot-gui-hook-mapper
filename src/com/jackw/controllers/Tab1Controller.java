@@ -1,5 +1,6 @@
 package com.jackw.controllers;
 
+import com.jackw.ManualMapper;
 import com.jackw.logic.*;
 import java.io.File;
 import java.util.List;
@@ -32,6 +33,8 @@ public class Tab1Controller {
 	@FXML TableColumn<PbLink, String> clientClass;
 	@FXML public Tab tab_interfaces;
 	@FXML public Tab tab_getters;
+	@FXML Tooltip tt_clientjarpath;
+	@FXML Tooltip tt_apijarpath;
 
 	private ApiData data = new ApiData();
 
@@ -42,29 +45,33 @@ public class Tab1Controller {
 		if (target == select_jar_api) {
 			data.pbApi = new PbApi(data, new File("api.jar"));
 			lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
-			List<ListEntryAdapter<ApiInterface>> list = data.pbApi.interfaces.stream()
-					.map(i -> new ListEntryAdapter<>(i.getClass().getName(), i))
-					.collect(Collectors.toList());
-			list1.setItems(FXCollections.observableArrayList(list));
 			Notifications.create().title("Parabot Mapper").text("Loaded API JAR").show();
 		} else if (target == select_jar_client) {
 			data.client = new RspsClient(new File("dreamscape.jar"));
 			lblApiPath1.setText(data.client.client.getAbsolutePath());
-			list2.setItems(FXCollections.observableArrayList(data.client.entries));
 			Notifications.create().title("Parabot Mapper").text("Loaded Client JAR").show();
 		}
 		else if (target == load_jar_api) {
 			if (data.pbApi == null) {
 				lblApiPath.setText("No Api JAR selected!");
 			} else {
+				List<ListEntryAdapter<ApiInterface>> list = data.pbApi.interfaces.stream()
+						.map(i -> new ListEntryAdapter<>(i.getClass().getName(), i))
+						.collect(Collectors.toList());
+				list1.setItems(FXCollections.observableArrayList(list));
+				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
+				onLoadJar();
 			}
 		}
 		else if (target == load_jar_client) {
 			if (data.client == null) {
 				lblApiPath1.setText("No Client JAR selected!");
 			} else {
+				list2.setItems(FXCollections.observableArrayList(data.client.entries));
+				tt_clientjarpath.setText("Loaded at: "+data.client.client.getAbsolutePath());
 				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
+				onLoadJar();
 			}
 		} else if (target == menuitem_link_api_interface) {
 			link();
@@ -73,6 +80,13 @@ public class Tab1Controller {
 		} else {
 			System.out.println(target.toString());
 			Notifications.create().title("Parabot Mapper").text("Action missing: "+target.toString()).show();
+		}
+	}
+
+	private void onLoadJar() {
+		if (data.pbApi != null && data.client != null) {
+			Tab2Getters ctrl = (Tab2Getters) ManualMapper.controllers.get(ManualMapper.CTRLS.TAB2);
+			ctrl.unlockPanel();
 		}
 	}
 

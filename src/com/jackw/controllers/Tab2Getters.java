@@ -25,4 +25,13 @@ public class Tab2Getters {
 		System.out.println("set all components on this anchor pane to disabled + opacity=0.15");
 	}
 
+	public void unlockPanel() {
+		label_locked.setVisible(false);
+		anchor_pane_root.getChildren().stream().forEach(c -> {
+			if (c != label_locked) {
+				c.setDisable(false);
+				c.setOpacity(1);
+			}
+		});
+	}
 }

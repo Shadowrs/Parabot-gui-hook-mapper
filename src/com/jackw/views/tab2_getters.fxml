@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -16,5 +17,11 @@
       </Label>
       <Label layoutX="36.0" layoutY="71.0" text="1. Accessor: " />
       <ChoiceBox fx:id="accessorChoice" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="105.0" text="2. Available API methods:" />
+      <ChoiceBox layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
+      <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
+      <TextField editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
+      <Label layoutX="36.0" layoutY="140.0" text="3. Available Client Fields by Type:" />
+      <ChoiceBox layoutX="225.0" layoutY="136.0" prefHeight="25.0" prefWidth="271.0" />
    </children>
 </AnchorPane>
