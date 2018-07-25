@@ -26,7 +26,7 @@ public class Tab1Controller {
 	@FXML public Button load_jar_api;
 	@FXML public Button load_jar_client;
 	@FXML public ListView<ApiInterface> list1;
-	@FXML public ListView<ClientEntry> list2;
+	@FXML public ListView<ClientClass> list2;
 	@FXML public TableView<InterfaceBind> table1;
 	@FXML public MenuItem menuitem_link_api_interface;
 	@FXML public MenuItem menuitem_link_class;
@@ -93,7 +93,7 @@ public class Tab1Controller {
 
 	private void link() {
 		ApiInterface x = list1.getSelectionModel().getSelectedItem();
-		ClientEntry c = list2.getSelectionModel().getSelectedItem();
+		ClientClass c = list2.getSelectionModel().getSelectedItem();
 		if (x == null || c == null) {
 			System.out.println("bad selection");
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
@@ -109,9 +109,9 @@ public class Tab1Controller {
 		private final SimpleStringProperty apiClass;
 		private final SimpleStringProperty clientClass;
 
-		public InterfaceBind(ApiInterface apiInterface, ClientEntry clientEntry) {
+		public InterfaceBind(ApiInterface apiInterface, ClientClass clientClass) {
 			apiClass = new SimpleStringProperty(apiInterface.name);
-			clientClass = new SimpleStringProperty(clientEntry.name);
+			this.clientClass = new SimpleStringProperty(clientClass.name);
 		}
 
 		public String getApiClass() {
@@ -160,10 +160,10 @@ public class Tab1Controller {
 
 		list2.setCellFactory(new Callback<>() {
 			@Override
-			public ListCell<ClientEntry> call(ListView<ClientEntry> param) {
+			public ListCell<ClientClass> call(ListView<ClientClass> param) {
 				return new ListCell<>() {
 					@Override
-					protected void updateItem(ClientEntry item, boolean empty) {
+					protected void updateItem(ClientClass item, boolean empty) {
 						super.updateItem(item, empty);
 
 						if (empty || item == null) {

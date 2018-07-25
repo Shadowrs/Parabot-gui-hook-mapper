@@ -20,7 +20,8 @@ public class PbApi {
 				new ApiInterface("Character", new ArrayList<>(List.of(
 						new JavaField("getX()", FieldType.INT),
 						new JavaField("getY()", FieldType.INT),
-						new JavaField("getZ()", FieldType.INT)
+						new JavaField("getZ()", FieldType.INT),
+						new JavaField("getModel()")
 				))),
 				new ApiInterface("NPC", new ArrayList<>(List.of(
 						new JavaField("getNpcDefinition()"),
