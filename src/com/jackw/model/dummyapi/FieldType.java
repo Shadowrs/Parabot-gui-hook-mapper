@@ -1,11 +1,12 @@
-package com.jackw.model;
+package com.jackw.model.dummyapi;
 
-public class JavaField {
-	public String name;
-	public FieldType type;
+public enum FieldType {
+	INT, LONG, STRING, BYTE, CHAR,
+	INT_ARRAY, LONG_ARRAY, STRING_ARRAY, BYTE_ARRAY, CHAR_ARRAY,
+	CLASS;
 
-	public JavaField(String s) {
-		this.name = s;
+	public static FieldType forString(String s) {
+		FieldType type = null;
 		if (s.startsWith("anInt"))
 			type  = s.startsWith("anIntArray") ? FieldType.INT_ARRAY : FieldType.INT;
 		else if (s.startsWith("aLong"))
@@ -16,15 +17,8 @@ public class JavaField {
 			type  = s.startsWith("aByteArray") ? FieldType.BYTE_ARRAY : FieldType.BYTE;
 		else if (s.startsWith("aChar"))
 			type  = s.startsWith("aCharArray") ? FieldType.CHAR_ARRAY : FieldType.CHAR;
-	}
-
-	public enum FieldType {
-		INT, LONG, STRING, BYTE, CHAR,
-		INT_ARRAY, LONG_ARRAY, STRING_ARRAY, BYTE_ARRAY, CHAR_ARRAY
-	}
-	// TODO types access etc etc
-
-	public boolean typeMatch(JavaField other) {
-		return other != null && other.type != null && type == other.type;
+		else
+			type = FieldType.CLASS;
+		return  type;
 	}
 }

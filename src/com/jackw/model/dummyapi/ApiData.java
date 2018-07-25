@@ -1,4 +1,4 @@
-package com.jackw.model;
+package com.jackw.model.dummyapi;
 
 public class ApiData {
 

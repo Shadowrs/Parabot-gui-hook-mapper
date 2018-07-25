@@ -2,7 +2,7 @@ package com.jackw;
 
 import com.jackw.controllers.Tab1Controller;
 import com.jackw.controllers.Tab2Getters;
-import com.jackw.model.ApiData;
+import com.jackw.model.dummyapi.ApiData;
 import com.jackw.model.ControllerKey;
 import java.io.IOException;
 import java.util.HashMap;

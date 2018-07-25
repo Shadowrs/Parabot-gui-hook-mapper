@@ -1,10 +1,11 @@
-package com.jackw.model;
+package com.jackw.model.dummyapi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientEntry {
-	public String name;
+	public final String name;
+	public final FieldType type;
 
 	public List<JavaField> fields = new ArrayList<>(List.of(
 			new JavaField("anInt1"),
@@ -17,5 +18,11 @@ public class ClientEntry {
 
 	public ClientEntry(String s) {
 		this.name = s;
+		this.type = FieldType.forString(s);
+	}
+
+	public ClientEntry(String s, FieldType type) {
+		this.name = s;
+		this.type = type;
 	}
 }

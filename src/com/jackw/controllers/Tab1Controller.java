@@ -1,7 +1,7 @@
 package com.jackw.controllers;
 
 import com.jackw.ManualMapper;
-import com.jackw.model.*;
+import com.jackw.model.dummyapi.*;
 import java.io.File;
 import java.util.Random;
 import javafx.beans.binding.Bindings;

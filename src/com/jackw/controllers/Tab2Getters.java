@@ -1,8 +1,8 @@
 package com.jackw.controllers;
 
 import com.jackw.ManualMapper;
-import com.jackw.model.ApiInterface;
-import com.jackw.model.JavaField;
+import com.jackw.model.dummyapi.ApiInterface;
+import com.jackw.model.dummyapi.JavaField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
