@@ -4,13 +4,16 @@ import com.jackw.ManualMapper;
 import com.jackw.model.*;
 import java.io.File;
 import java.util.Random;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
@@ -133,6 +136,8 @@ public class Tab1Controller {
 
 		column1_apiInterClass.setCellValueFactory(new PropertyValueFactory<>("apiClass"));
 		column2_clientClass.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
+		createContextMenuCellFactory(column1_apiInterClass);
+		createContextMenuCellFactory(column2_clientClass);
 
 		list1.setCellFactory(new Callback<>() {
 			@Override
@@ -162,30 +167,6 @@ public class Tab1Controller {
 			}
 		});
 
-		final MenuItem test = new MenuItem("test");
-
-		// Configure context menu of a selected item
-		table1.setRowFactory(tv -> {
-			TableRow<InterfaceBind> row = new TableRow<>();
-			ContextMenu menu = new ContextMenu();
-
-			row.setOnContextMenuRequested((event) -> {
-				if(! row.isEmpty()) {
-					if(! row.getContextMenu().getItems().contains(test)) {
-						row.getContextMenu().getItems().add(0, test);
-					}
-				}
-			});
-
-			row.itemProperty().addListener((obs, oldItem, newItem) -> {
-
-			});
-
-			row.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) ->
-					row.setContextMenu(isNowEmpty ? null : menu));
-			return row ;
-		});
-
 		tabpane1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == tab_getters) {
 				main.tab2().onTabOpened();
@@ -194,6 +175,45 @@ public class Tab1Controller {
 
 		// We're ready
 		System.out.println("ready");
+	}
+
+	private void createContextMenuCellFactory(TableColumn<InterfaceBind, String> col) {
+		final StringProperty contextMenuValue = new SimpleStringProperty("");
+		final ContextMenu menu = new ContextMenu();
+		final MenuItem mi3 = new MenuItem();
+		// text depends on "current cell"
+		// more commonly, the action handler would depend on this value,
+		// but this is just a proof of concept
+		mi3.textProperty().bind(Bindings.format("Unbind %s", contextMenuValue));
+		menu.getItems().addAll(mi3);
+
+		col.setCellFactory(new Callback<>() {
+			@Override
+			public TableCell<InterfaceBind, String> call(TableColumn<InterfaceBind, String> param) {
+
+				TableCell<InterfaceBind, String> cell = new TableCell<>() {
+					@Override
+					protected void updateItem(String item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (empty || item == null) {
+							setText(null);
+							setGraphic(null);
+						} else {
+							setText(item);
+						}
+					}
+				};
+				cell.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+					if (event.isSecondaryButtonDown() && !cell.isEmpty()) {
+						contextMenuValue.setValue(cell.getItem());
+						menu.show(cell, event.getScreenX(), event.getScreenY());
+					}
+				});
+				return cell;
+			}
+		});
+
 	}
 
 }
