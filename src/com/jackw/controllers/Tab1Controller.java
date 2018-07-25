@@ -145,9 +145,14 @@ public class Tab1Controller {
 				return new ListCell<>() {
 					@Override
 					protected void updateItem(ApiInterface item, boolean empty) {
-						if (item == null) return;
 						super.updateItem(item, empty);
-						setText(item.name);
+
+						if (empty || item == null) {
+							setText(null);
+							setGraphic(null);
+						} else {
+							setText(item.name);
+						}
 					}
 				};
 			}
@@ -159,9 +164,14 @@ public class Tab1Controller {
 				return new ListCell<>() {
 					@Override
 					protected void updateItem(ClientEntry item, boolean empty) {
-						if (item == null) return;
 						super.updateItem(item, empty);
-						setText(item.name);
+
+						if (empty || item == null) {
+							setText(null);
+							setGraphic(null);
+						} else {
+							setText(item.name);
+						}
 					}
 				};
 			}
