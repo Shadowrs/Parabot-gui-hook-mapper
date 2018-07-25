@@ -25,6 +25,6 @@ public class JavaField {
 	// TODO types access etc etc
 
 	public boolean typeMatch(JavaField other) {
-		return other.type != null && type == other.type;
+		return other != null && other.type != null && type == other.type;
 	}
 }

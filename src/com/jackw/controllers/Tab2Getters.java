@@ -197,8 +197,11 @@ public class Tab2Getters {
 		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val
 		box_accessor.setItems(FXCollections.observableArrayList(items));
 		box_api_fields.getSelectionModel().clearSelection();
+		box_api_fields.setItems(FXCollections.observableArrayList());
 		box_client_fields_typed.getSelectionModel().clearSelection();
+		box_client_fields_typed.setItems(FXCollections.observableArrayList());
 		box_client_all_fields.getSelectionModel().clearSelection();
+		box_client_all_fields.setItems(FXCollections.observableArrayList());
 		txt_client_class.setText("?");
 	}
 }
