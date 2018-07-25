@@ -1,4 +1,4 @@
-package com.jackw.logic;
+package com.jackw.model;
 
 public class ApiData {
 

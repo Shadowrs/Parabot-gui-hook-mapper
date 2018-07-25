@@ -2,13 +2,12 @@ package com.jackw;
 
 import com.jackw.controllers.Tab1Controller;
 import com.jackw.controllers.Tab2Getters;
-import com.jackw.logic.ApiData;
+import com.jackw.model.ApiData;
+import com.jackw.model.ControllerKey;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

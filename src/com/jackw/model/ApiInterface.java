@@ -1,4 +1,4 @@
-package com.jackw.logic;
+package com.jackw.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.jackw;
+package com.jackw.model;
 
 public enum ControllerKey {
 	TAB1,
