@@ -3,6 +3,10 @@ package com.jackw.controllers;
 import com.jackw.ManualMapper;
 import com.jackw.model.dummyapi.*;
 import java.io.File;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
@@ -43,6 +48,13 @@ public class Tab1Controller {
 	public void setMain(ManualMapper main, ApiData data) {
 		this.main = main;
 		this.data = data;
+		postInit();
+	}
+
+	private void postInit() {
+		// throws NPE if in initialize() since 'main' will be null
+		createContextMenuBrowseForJar(select_jar_api, main.recentFiles);
+		createContextMenuBrowseForJar(select_jar_client, main.recentFiles2);
 	}
 
 	private ManualMapper main;
@@ -53,6 +65,7 @@ public class Tab1Controller {
 		EventTarget target = e.getTarget();
 		assert target != null;
 		if (target == select_jar_api) {
+
 			data.pbApi = new PbApi(data, new File("api.jar"));
 			lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
 			Notifications.create().title("Parabot Mapper").text("Loaded API JAR").show();
@@ -189,6 +202,48 @@ public class Tab1Controller {
 
 		// We're ready
 		System.out.println("ready");
+	}
+
+	private void createContextMenuBrowseForJar(Button button, List<Path> recentFiles) {
+		button.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+			ContextMenu menu = Optional.ofNullable(button.getContextMenu()).orElseGet(() -> {
+				ContextMenu m = new ContextMenu();
+				button.setContextMenu(m);
+				return m;
+			});
+			List<MenuItem> items = new ArrayList<>(0);
+			recentFiles.stream()
+					.map(Path::toFile)
+					.forEach(f -> {
+						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
+						menuItem.setOnAction(event1 -> {
+							data.pbApi = new PbApi(data, f);
+							lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
+							Notifications.create().title("Parabot Mapper").text("Loaded API JAR at "+f.getAbsolutePath()).show();
+						});
+						items.add(menuItem);
+					});
+			MenuItem fileBrowse = new MenuItem("Browse for Jar");
+			fileBrowse.setOnAction(event12 -> {
+				FileChooser fc = new FileChooser();
+				fc.setTitle("Find API JAR");
+				fc.setInitialDirectory(new File(System.getProperty("user.home")));
+				fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR", "*.jar"));
+				File f = fc.showOpenDialog(main.getStage());
+				if (f != null && f.getPath().endsWith(".jar")) {
+					data.pbApi = new PbApi(data, f);
+					lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
+					Notifications.create().title("Parabot Mapper").text("Loaded API JAR at "+f.getAbsolutePath()).show();
+					if (!recentFiles.contains(f.toPath()))
+						recentFiles.add(f.toPath());
+				}
+			});
+			items.add(fileBrowse);
+
+			menu.getItems().clear();
+			menu.getItems().addAll(items);
+			menu.show(button, event.getScreenX(), event.getScreenY());
+		});
 	}
 
 	private void createContextMenuCellFactory(TableColumn<InterfaceBind, String> col) {

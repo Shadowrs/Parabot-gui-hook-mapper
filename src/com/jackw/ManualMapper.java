@@ -3,7 +3,11 @@ package com.jackw;
 import com.jackw.controllers.Tab1Controller;
 import com.jackw.controllers.Tab2Controller;
 import com.jackw.model.dummyapi.ApiData;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,6 +23,8 @@ public class ManualMapper extends Application {
 	// fast
 	private Tab1Controller t1_controller;
 	private Tab2Controller t2_controller;
+	public List<Path> recentFiles = new ArrayList<>(0);
+	public List<Path> recentFiles2 = new ArrayList<>(0);
 
 	public Stage getStage() {
 		return stage;
@@ -47,6 +53,13 @@ public class ManualMapper extends Application {
 		stage.setScene(scene);
 		stage.show();
 		this.stage = stage;
+
+		recentFiles.add(new File(
+				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"pb-317-min-api.jar")
+				.toPath());
+		recentFiles2.add(new File(
+				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"dreamscape.jar")
+				.toPath());
 	}
 
 	public ApiData getData() {
