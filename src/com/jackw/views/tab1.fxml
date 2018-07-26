@@ -94,7 +94,7 @@
                         </Button>
                         <Label layoutX="14.0" layoutY="18.0" text="API:" />
                         <Label layoutX="14.0" layoutY="53.0" text="Client:" />
-                        <Label layoutX="357.0" layoutY="88.0" text="API Interface to Client Class Bindings" />
+                        <Label layoutX="357.0" layoutY="88.0" text="API Acessor to Client Class Bindings" />
                      </children>
                   </AnchorPane>
                </content>

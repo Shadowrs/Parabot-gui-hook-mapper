@@ -29,6 +29,9 @@ public class Tab2Controller {
 	@FXML public ChoiceBox<JavaField> box_client_all_fields;
 	@FXML public TextField txt_client_class;
 	@FXML public Button button_bind_getter;
+	@FXML public Label label_api_fields;
+	@FXML public Label label_client_fields_typed;
+	@FXML public Label label_all_client_fields;
 
 	public void setMain(ManualMapper main) {
 		this.main = main;
@@ -101,6 +104,8 @@ public class Tab2Controller {
 			}
 			box_api_fields.setDisable(false);
 			box_api_fields.setItems(FXCollections.observableArrayList(newValue.fields));
+			label_api_fields.setText("2. Available API fields ("+newValue.fields.size()+") :");
+			label_client_fields_typed.setText("3. Available Client Fields by Type:");
 
 			System.out.println(newValue.name+" v "+ Arrays.toString((String[])main.tab1().table1.getItems().stream()
 					.map(Tab1Controller.InterfaceBind::getApiClass)
@@ -116,6 +121,9 @@ public class Tab2Controller {
 					main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass()))
 							.findFirst().get().fields));
 			txt_client_class.setText(ib.getClientClass());
+
+			label_all_client_fields.setText("3. Alternative: All Client Fields ("+
+					box_client_all_fields.getItems().size()+") :");
 		});
 
 		box_api_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -130,14 +138,21 @@ public class Tab2Controller {
 							.findFirst().get().fields.stream().filter(f -> f.typeMatch(newValue))
 							.collect(Collectors.toList())
 			));
+			label_client_fields_typed.setText("3. Available Client Fields by Type ("+
+					box_client_fields_typed.getItems().size()+") :");
+
 		});
 
 		box_client_fields_typed.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			box_client_all_fields.getSelectionModel().clearSelection();
+			if (newValue != null)
+			if (-1 != box_client_all_fields.getSelectionModel().getSelectedIndex())
+				box_client_all_fields.getSelectionModel().clearSelection();
 		});
 
 		box_client_all_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			box_client_fields_typed.getSelectionModel().clearSelection();
+			if (newValue != null)
+			if (-1 != box_client_fields_typed.getSelectionModel().getSelectedIndex())
+				box_client_fields_typed.getSelectionModel().clearSelection();
 		});
 
 		System.out.println("[Tab2 Controller] Init complete");
