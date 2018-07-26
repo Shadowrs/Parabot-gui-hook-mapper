@@ -22,7 +22,7 @@ public class Tab2Controller {
 
 	@FXML public Label label_steps_fixed;
 	@FXML public Label label_locked;
-	@FXML public AnchorPane anchor_pane_root;
+	@FXML public AnchorPane rootpane;
 	@FXML public ChoiceBox<ApiInterface> box_accessor;
 	@FXML public ChoiceBox<JavaField> box_api_fields;
 	@FXML public ChoiceBox<JavaField> box_client_fields_typed;
@@ -41,7 +41,7 @@ public class Tab2Controller {
 
 	@FXML
 	public void initialize() {
-		anchor_pane_root.getChildren().forEach(c -> {
+		rootpane.getChildren().forEach(c -> {
 			if (c != label_locked) {
 				c.setDisable(true);
 				c.setOpacity(0.15);
@@ -161,7 +161,7 @@ public class Tab2Controller {
 
 	public void unlockPanel() {
 		label_locked.setVisible(false); // hide warning
-		anchor_pane_root.getChildren().stream().forEach(c -> {
+		rootpane.getChildren().stream().forEach(c -> {
 			if (c != label_locked) {
 				c.setOpacity(1);
 			}
@@ -173,7 +173,7 @@ public class Tab2Controller {
 
 	public void lockPanel() {
 		label_locked.setVisible(true); // hide warning
-		anchor_pane_root.getChildren().forEach(c -> {
+		rootpane.getChildren().forEach(c -> {
 			if (c != label_locked) {
 				c.setOpacity(0.15);
 				c.setDisable(true);
@@ -201,7 +201,7 @@ public class Tab2Controller {
 	}
 
 	public void onTabOpened() {
-		main.resizeTo(615, 523);
+		main.resizeTo(rootpane.getPrefWidth() + 15, rootpane.getPrefHeight() + 60);
 		if (main.tab1().table1.getItems().size() == 0) {
 			lockPanel();
 			return;

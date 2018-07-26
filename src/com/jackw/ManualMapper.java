@@ -11,7 +11,6 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class ManualMapper extends Application {
@@ -45,16 +44,17 @@ public class ManualMapper extends Application {
 		// any on init code here
 
 
-		final FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("views/tab2_getters.fxml"));
+		final FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("views/tab2.fxml"));
 		controller1.tab_getters.setContent(fxmlLoader2.load());
 		final Tab2Controller controller2 = fxmlLoader2.getController();
 		controller2.setMain(this);
 		t2_controller = controller2;
 
+		this.stage = stage;
 		stage.setTitle("Parabot Mapper");
 		stage.setScene(scene);
+		resizeTo(tab1().pane_tab1.getPrefWidth() + 15, tab1().pane_tab1.getPrefHeight() + 60);
 		stage.show();
-		this.stage = stage;
 
 		recentFiles.add(new File(
 				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"pb-317-min-api.jar")
@@ -78,12 +78,7 @@ public class ManualMapper extends Application {
 		return t2_controller;
 	}
 
-	public void resizeTo(Pane pane) {
-		getStage().setWidth(pane.getWidth());
-		getStage().setHeight(pane.getHeight());
-	}
-
-	public void resizeTo(int width, int height) {
+	public void resizeTo(double width, double height) {
 		getStage().setWidth(width);
 		getStage().setHeight(height);
 	}

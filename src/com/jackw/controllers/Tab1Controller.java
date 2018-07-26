@@ -44,6 +44,8 @@ public class Tab1Controller {
 	@FXML public Tooltip tt_apijarpath;
 	@FXML public TabPane tabpane1;
 	@FXML public AnchorPane root_anchor_pane;
+	@FXML public AnchorPane pane_tab1;
+	@FXML public AnchorPane pane_tab2;
 
 	public void setMain(ManualMapper main, ApiData data) {
 		this.main = main;
@@ -201,7 +203,7 @@ public class Tab1Controller {
 			if (newValue == tab_getters) {
 				main.tab2().onTabOpened();
 			} else if (newValue == tab_interfaces) {
-				main.resizeTo(601, 430);
+				main.resizeTo(pane_tab1.getPrefWidth() + 15, pane_tab1.getPrefHeight() + 60);
 			}
 		});
 

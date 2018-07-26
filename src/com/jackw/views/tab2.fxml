@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor_pane_root" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Controller">
+<AnchorPane fx:id="rootpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Controller">
    <children>
       <Label fx:id="label_locked" alignment="CENTER" layoutX="68.0" layoutY="157.0" prefHeight="98.0" prefWidth="464.0" text="You must load a Parabot API JAR &#10;and a Client JAR to unlock this tab" textAlignment="CENTER">
          <font>

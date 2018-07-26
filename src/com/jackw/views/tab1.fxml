@@ -13,13 +13,13 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root_anchor_pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
+<AnchorPane fx:id="root_anchor_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
    <children>
-      <TabPane fx:id="tabpane1" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tab_interfaces" text="Interfaces">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="pane_tab1" prefHeight="365.0" prefWidth="587.0">
                      <children>
                         <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="217.0">
                           <columns>
@@ -101,7 +101,10 @@
                <tooltip>
                   <Tooltip text="Here you can customize the hooks file &lt;interfaces&gt; entries binding &lt;interface&gt; to &lt;class&gt;" />
                </tooltip></Tab>
-          <Tab fx:id="tab_getters" text="Getters" />
+          <Tab fx:id="tab_getters" text="Getters">
+               <content>
+                  <AnchorPane fx:id="pane_tab2" prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
         </tabs>
       </TabPane>
    </children>
