@@ -186,8 +186,8 @@ public class Tab2Controller {
 	}
 
 	public void onTabOpened() {
+		main.resizeTo(615, 523);
 		if (main.tab1().table1.getItems().size() == 0) {
-			main.resizeTo(601, 523);
 			lockPanel();
 			return;
 		}
