@@ -255,12 +255,18 @@ public class Tab1Controller {
 	private void createContextMenuCellFactory(TableColumn<InterfaceBind, String> col) {
 		final StringProperty contextMenuValue = new SimpleStringProperty("");
 		final ContextMenu menu = new ContextMenu();
-		final MenuItem mi3 = new MenuItem();
+		final MenuItem mi = new MenuItem();
 		// text depends on "current cell"
 		// more commonly, the action handler would depend on this value,
 		// but this is just a proof of concept
-		mi3.textProperty().bind(Bindings.format("Unbind %s", contextMenuValue));
-		menu.getItems().addAll(mi3);
+		mi.textProperty().bind(Bindings.format("Unbind %s", contextMenuValue));
+		mi.setOnAction(event -> {
+			InterfaceBind ib = table1.getSelectionModel().getSelectedItem();
+			table1.getItems().remove(ib);
+			Notifications.create().title("Parabot Mapper")
+					.text(String.format("Unbound [%s : %s]", ib.getApiClass(), ib.getClientClass())).show();
+		});
+		menu.getItems().addAll(mi);
 
 		col.setCellFactory(new Callback<>() {
 			@Override
