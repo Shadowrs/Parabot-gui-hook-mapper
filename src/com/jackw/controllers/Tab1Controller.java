@@ -25,8 +25,8 @@ import org.controlsfx.control.Notifications;
 
 public class Tab1Controller {
 
-	@FXML public Label lblApiPath;
-	@FXML public Label lblApiPath1;
+	@FXML public Label label_path_1;
+	@FXML public Label label_path_2;
 	@FXML public Button select_jar_api;
 	@FXML public Button select_jar_client;
 	@FXML public Button load_jar_api;
@@ -53,8 +53,8 @@ public class Tab1Controller {
 
 	private void postInit() {
 		// throws NPE if in initialize() since 'main' will be null
-		createContextMenuBrowseForJar(select_jar_api, main.recentFiles);
-		createContextMenuBrowseForJar(select_jar_client, main.recentFiles2);
+		createContextMenuBrowseForJar(select_jar_api, main.recentFiles, true, label_path_1);
+		createContextMenuBrowseForJar(select_jar_client, main.recentFiles2, false, label_path_2);
 	}
 
 	private ManualMapper main;
@@ -64,10 +64,10 @@ public class Tab1Controller {
 	void onAction(ActionEvent e) {
 		EventTarget target = e.getTarget();
 		assert target != null;
-		
+
 		if (target == load_jar_api) {
 			if (data.pbApi == null) {
-				lblApiPath.setText("No Api JAR selected!");
+				label_path_1.setText("No Api JAR selected!");
 			} else {
 				list1.setItems(FXCollections.observableArrayList(data.pbApi.interfaces));
 				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
@@ -77,7 +77,7 @@ public class Tab1Controller {
 		}
 		else if (target == load_jar_client) {
 			if (data.client == null) {
-				lblApiPath1.setText("No Client JAR selected!");
+				label_path_2.setText("No Client JAR selected!");
 			} else {
 				list2.setItems(FXCollections.observableArrayList(data.client.entries));
 				tt_clientjarpath.setText("Loaded at: "+data.client.client.getAbsolutePath());
@@ -101,10 +101,17 @@ public class Tab1Controller {
 		ApiInterface x = list1.getSelectionModel().getSelectedItem();
 		ClientClass c = list2.getSelectionModel().getSelectedItem();
 		if (x == null || c == null) {
-			System.out.println("bad selection");
+			System.err.println("A selected Accessor or Client Class is null");
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
 			x == null ? "API Interface class" : "Client class")).showError();
-		} else {
+		} if (table1.getItems().stream().filter(e -> e.getApiClass().equals(x.name) || e.getClientClass().equals(c.name)).count() > 0) {
+			final String mes = String.format(
+					"Either Accessor %s or Client class %s is already bound. Either remove this binding or " +
+							"choose a new one", x.name, c.name);
+			System.err.println(mes);
+			Notifications.create().title("Error").text(mes).showWarning();
+		}
+		else {
 			table1.getItems().add(new InterfaceBind(x, c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 			main.tab2().unlockPanel();
@@ -195,7 +202,7 @@ public class Tab1Controller {
 		System.out.println("ready");
 	}
 
-	private void createContextMenuBrowseForJar(Button button, List<Path> recentFiles) {
+	private void createContextMenuBrowseForJar(Button button, List<Path> recentFiles, boolean api, Label label) {
 		button.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 			ContextMenu menu = Optional.ofNullable(button.getContextMenu()).orElseGet(() -> {
 				ContextMenu m = new ContextMenu();
@@ -208,8 +215,12 @@ public class Tab1Controller {
 					.forEach(f -> {
 						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
 						menuItem.setOnAction(event1 -> {
-							data.pbApi = new PbApi(data, f);
-							lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
+							if (api) {
+								data.pbApi = new PbApi(data, f);
+							} else {
+								data.client = new RspsClient(f);
+							}
+							label.setText(f.getAbsolutePath());
 							Notifications.create().title("Parabot Mapper").text("Loaded API JAR at "+f.getAbsolutePath()).show();
 						});
 						items.add(menuItem);
@@ -222,9 +233,13 @@ public class Tab1Controller {
 				fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("JAR", "*.jar"));
 				File f = fc.showOpenDialog(main.getStage());
 				if (f != null && f.getPath().endsWith(".jar")) {
-					data.pbApi = new PbApi(data, f);
-					lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
-					Notifications.create().title("Parabot Mapper").text("Loaded API JAR at "+f.getAbsolutePath()).show();
+					if (api) {
+						data.pbApi = new PbApi(data, f);
+					} else {
+						data.client = new RspsClient(f);
+					}
+					label.setText(f.getAbsolutePath());
+					Notifications.create().title("Parabot Mapper").text("Loaded "+(api?"API":"Client")+" JAR at "+f.getAbsolutePath()).show();
 					if (!recentFiles.contains(f.toPath()))
 						recentFiles.add(f.toPath());
 				}

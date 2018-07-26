@@ -59,7 +59,7 @@
                            <tooltip>
                               <Tooltip text="Browse for a Parabot-api.jar" />
                            </tooltip></Button>
-                        <Label fx:id="lblApiPath" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
+                        <Label fx:id="label_path_1" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
                            <padding>
                               <Insets right="5.0" />
                            </padding>
@@ -79,7 +79,7 @@
                            </tooltip>
                         </Button>
                         <Label layoutX="226.0" layoutY="53.0" text="Path:" />
-                        <Label fx:id="lblApiPath1" layoutX="263.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
+                        <Label fx:id="label_path_2" layoutX="263.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
                            <padding>
                               <Insets right="5.0" />
                            </padding>
