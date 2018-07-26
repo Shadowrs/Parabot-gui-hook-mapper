@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RspsClient {
-	public File client;
+	public File clientFile;
 	public List<ClientClass> entries = new ArrayList<>(List.of(
 			// a = Player
 			new ClientClass("a.class", new ArrayList<>(List.of(
 					new JavaField("anInt1"), // dummy
 					new JavaField("anInt2"), // dummy
 					new JavaField("aString1"), // name
-					new JavaField("RSPlayerAppearance")
+					new JavaField("aString4"), // dummy
+					new JavaField("RSPlayerAppearance"),
+					new JavaField("aStringArray1") // dummy
 			))),
 			// Character = b
 			new ClientClass("b.class", new ArrayList<>(List.of(
@@ -42,6 +44,6 @@ public class RspsClient {
 	));
 
 	public RspsClient(File f) {
-		this.client = f;
+		this.clientFile = f;
 	}
 }

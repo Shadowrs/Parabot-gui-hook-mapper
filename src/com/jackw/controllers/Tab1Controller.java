@@ -70,7 +70,13 @@ public class Tab1Controller {
 				label_path_1.setText("No Api JAR selected!");
 			} else {
 				list1.setItems(FXCollections.observableArrayList(data.pbApi.interfaces));
-				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath()+"\nAccessor count: 1");
+				StringBuilder sb = new StringBuilder();
+				sb.append("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
+				sb.append("\nAccessor count: "+data.pbApi.interfaces.size());
+				data.pbApi.interfaces.forEach(i -> {
+					sb.append("\n\t"+i.name+" has "+i.fields.size()+" fields");
+				});
+				tt_apijarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
 				onLoadJar();
 			}
@@ -80,7 +86,7 @@ public class Tab1Controller {
 				label_path_2.setText("No Client JAR selected!");
 			} else {
 				list2.setItems(FXCollections.observableArrayList(data.client.entries));
-				tt_clientjarpath.setText("Loaded at: "+data.client.client.getAbsolutePath());
+				tt_clientjarpath.setText("Loaded at: "+data.client.clientFile.getAbsolutePath()+"\nClass count: "+data.client.entries.size());
 				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
 				onLoadJar();
 			}
@@ -104,7 +110,8 @@ public class Tab1Controller {
 			System.err.println("A selected Accessor or Client Class is null");
 			Notifications.create().title("Error").text(String.format("You need to select an %s",
 			x == null ? "API Interface class" : "Client class")).showError();
-		} if (table1.getItems().stream().filter(e -> e.getApiClass().equals(x.name) || e.getClientClass().equals(c.name)).count() > 0) {
+		}
+		else if (table1.getItems().stream().filter(e -> e.getApiClass().equals(x.name) || e.getClientClass().equals(c.name)).count() > 0) {
 			final String mes = String.format(
 					"Either Accessor %s or Client class %s is already bound. Either remove this binding or " +
 							"choose a new one", x.name, c.name);
