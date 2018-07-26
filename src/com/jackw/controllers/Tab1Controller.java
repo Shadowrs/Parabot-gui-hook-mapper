@@ -70,7 +70,7 @@ public class Tab1Controller {
 				label_path_1.setText("No Api JAR selected!");
 			} else {
 				list1.setItems(FXCollections.observableArrayList(data.pbApi.interfaces));
-				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
+				tt_apijarpath.setText("Loaded at: "+data.pbApi.apiJar.getAbsolutePath()+"\nAccessor count: 1");
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
 				onLoadJar();
 			}
