@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
+<AnchorPane fx:id="root_anchor_pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
    <children>
       <TabPane fx:id="tabpane1" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -79,7 +79,7 @@
                            </tooltip>
                         </Button>
                         <Label layoutX="226.0" layoutY="53.0" text="Path:" />
-                        <Label fx:id="lblApiPath1" layoutX="263.0" layoutY="53.0" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
+                        <Label fx:id="lblApiPath1" layoutX="263.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
                            <padding>
                               <Insets right="5.0" />
                            </padding>

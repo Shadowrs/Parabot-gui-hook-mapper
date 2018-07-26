@@ -6,7 +6,7 @@ public enum FieldType {
 	CLASS;
 
 	public static FieldType forString(String s) {
-		FieldType type = null;
+		FieldType type;
 		if (s.startsWith("anInt"))
 			type  = s.startsWith("anIntArray") ? FieldType.INT_ARRAY : FieldType.INT;
 		else if (s.startsWith("aLong"))

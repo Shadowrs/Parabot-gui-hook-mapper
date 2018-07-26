@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
@@ -37,6 +38,7 @@ public class Tab1Controller {
 	@FXML public Tooltip tt_clientjarpath;
 	@FXML public Tooltip tt_apijarpath;
 	@FXML public TabPane tabpane1;
+	@FXML public AnchorPane root_anchor_pane;
 
 	public void setMain(ManualMapper main, ApiData data) {
 		this.main = main;
@@ -180,6 +182,8 @@ public class Tab1Controller {
 		tabpane1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == tab_getters) {
 				main.tab2().onTabOpened();
+			} else if (newValue == tab_interfaces) {
+				main.resizeTo(601, 430);
 			}
 		});
 

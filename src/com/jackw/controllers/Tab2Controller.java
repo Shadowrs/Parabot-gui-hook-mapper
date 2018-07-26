@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
 
-public class Tab2Getters {
+public class Tab2Controller {
 
 	@FXML public Label label_steps_fixed;
 	@FXML public Label label_locked;
@@ -38,7 +38,7 @@ public class Tab2Getters {
 
 	@FXML
 	public void initialize() {
-		anchor_pane_root.getChildren().stream().forEach(c -> {
+		anchor_pane_root.getChildren().forEach(c -> {
 			if (c != label_locked) {
 				c.setDisable(true);
 				c.setOpacity(0.15);
@@ -103,7 +103,7 @@ public class Tab2Getters {
 			box_api_fields.setItems(FXCollections.observableArrayList(newValue.fields));
 
 			System.out.println(newValue.name+" v "+ Arrays.toString((String[])main.tab1().table1.getItems().stream()
-					.map(s -> s.getApiClass())
+					.map(Tab1Controller.InterfaceBind::getApiClass)
 					.collect(Collectors.toList())
 					.toArray(new String[0])));
 
@@ -158,7 +158,7 @@ public class Tab2Getters {
 
 	public void lockPanel() {
 		label_locked.setVisible(true); // hide warning
-		anchor_pane_root.getChildren().stream().forEach(c -> {
+		anchor_pane_root.getChildren().forEach(c -> {
 			if (c != label_locked) {
 				c.setOpacity(0.15);
 				c.setDisable(true);
@@ -187,11 +187,12 @@ public class Tab2Getters {
 
 	public void onTabOpened() {
 		if (main.tab1().table1.getItems().size() == 0) {
+			main.resizeTo(601, 523);
 			lockPanel();
 			return;
 		}
 		List<ApiInterface> items = new ArrayList<>(0);
-		main.tab1().table1.getItems().stream().map(e -> e.getApiClass()).forEach(e -> {
+		main.tab1().table1.getItems().stream().map(Tab1Controller.InterfaceBind::getApiClass).forEach(e -> {
 			items.add(main.tab1().list1.getItems().stream().filter(i -> i.name.equals(e)).findFirst().get());
 		});
 		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val

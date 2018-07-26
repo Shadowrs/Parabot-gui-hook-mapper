@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor_pane_root" prefHeight="376.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Getters">
+<AnchorPane fx:id="anchor_pane_root" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Controller">
    <children>
       <Label fx:id="label_locked" alignment="CENTER" layoutX="68.0" layoutY="157.0" prefHeight="98.0" prefWidth="464.0" text="You must load a Parabot API JAR &#10;and a Client JAR to unlock this tab" textAlignment="CENTER">
          <font>
@@ -36,6 +36,13 @@
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
+      </TableView>
+      <Label layoutX="26.0" layoutY="414.0" text="Existing Setter&#10;bindings" />
+      <TableView layoutX="111.0" layoutY="373.0" prefHeight="136.0" prefWidth="476.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+         </columns>
       </TableView>
    </children>
 </AnchorPane>
