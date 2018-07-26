@@ -4,15 +4,15 @@ Assesses a given Parabot API JAR along with a Client JAR and filters possible cl
 
 <h3>Contributing</h4>
 
-<h5>Code Style<h5>
+<h5>Code Style</h5>
 
 Not enforced
   
-<h5>Building<h5>
+<h5>Building</h5>
 
 Built with JDK 10.0.1
   
-<h5>Dependencies<h5>
+<h5>Dependencies</h5>
   
 ![dependencies](https://i.imgur.com/8kLiQun.jpg)
 
