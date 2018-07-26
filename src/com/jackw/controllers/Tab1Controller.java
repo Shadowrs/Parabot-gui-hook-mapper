@@ -64,17 +64,8 @@ public class Tab1Controller {
 	void onAction(ActionEvent e) {
 		EventTarget target = e.getTarget();
 		assert target != null;
-		if (target == select_jar_api) {
-
-			data.pbApi = new PbApi(data, new File("api.jar"));
-			lblApiPath.setText(data.pbApi.apiJar.getAbsolutePath());
-			Notifications.create().title("Parabot Mapper").text("Loaded API JAR").show();
-		} else if (target == select_jar_client) {
-			data.client = new RspsClient(new File("dreamscape.jar"));
-			lblApiPath1.setText(data.client.client.getAbsolutePath());
-			Notifications.create().title("Parabot Mapper").text("Loaded Client JAR").show();
-		}
-		else if (target == load_jar_api) {
+		
+		if (target == load_jar_api) {
 			if (data.pbApi == null) {
 				lblApiPath.setText("No Api JAR selected!");
 			} else {

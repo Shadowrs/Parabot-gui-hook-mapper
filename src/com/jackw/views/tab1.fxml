@@ -73,7 +73,7 @@
                         <Label layoutX="226.0" layoutY="18.0" text="Path:" />
                         <Label layoutX="25.0" layoutY="88.0" text="API Interfaces" />
                         <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
-                        <Button fx:id="select_jar_client" layoutX="78.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
+                        <Button fx:id="select_jar_client" layoutX="78.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
                            <tooltip>
                               <Tooltip text="Browse for a RSPS client JAR" />
                            </tooltip>
