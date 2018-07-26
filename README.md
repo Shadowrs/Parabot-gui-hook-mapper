@@ -1,6 +1,21 @@
 # Parabot-gui-hook-mapper
 Assesses a given Parabot API JAR along with a Client JAR and filters possible classes and field types that match the API. 
 
+
+<h3>Contributing</h4>
+
+<h5>Code Style<h5>
+
+Not enforced
+  
+<h5>Building<h5>
+
+Built with JDK 10.0.1
+  
+<h5>Dependencies<h5>
+  
+![dependencies](https://i.imgur.com/8kLiQun.jpg)
+
 <h1>GUI</h1>
 
 **1.** When opened, you need to click "Select JAR" and browse using file explorer to the Parabot-API-[type=317-minified].jar and [client=dreamscape].jar
