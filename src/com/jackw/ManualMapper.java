@@ -1,5 +1,6 @@
 package com.jackw;
 
+import com.jackw.controllers.MainController;
 import com.jackw.controllers.Tab1Controller;
 import com.jackw.controllers.Tab2Controller;
 import com.jackw.model.dummyapi.ApiData;
@@ -22,6 +23,7 @@ public class ManualMapper extends Application {
 	// fast
 	private Tab1Controller t1_controller;
 	private Tab2Controller t2_controller;
+	private MainController mainController;
 	public List<Path> recentFiles = new ArrayList<>(0);
 	public List<Path> recentFiles2 = new ArrayList<>(0);
 
@@ -33,27 +35,34 @@ public class ManualMapper extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/tab1.fxml"));
 
-		final Scene scene = new Scene(fxmlLoader.load());
+		// Load main fxml
+		final FXMLLoader main = new FXMLLoader(getClass().getResource("views/main.fxml"));
+
+		// Init scene
+		final Scene scene = new Scene(main.load());
 		scene.getStylesheets().add("/com/jackw/views/css/hi.css");
 
-		final Tab1Controller controller1 = fxmlLoader.getController();
-		controller1.setMain(this, data);
-		t1_controller = controller1;
-		// any on init code here
+		final MainController mainController = this.mainController = main.getController();
+		mainController.setMain(this);
 
 
-		final FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("views/tab2.fxml"));
-		controller1.tab_getters.setContent(fxmlLoader2.load());
-		final Tab2Controller controller2 = fxmlLoader2.getController();
-		controller2.setMain(this);
-		t2_controller = controller2;
+		// Init tab1
+		final FXMLLoader tab1 = new FXMLLoader(getClass().getResource("views/tab1.fxml"));
+		mainController.tab1.setContent(tab1.load());
+		final Tab1Controller tab1_controller = t1_controller = tab1.getController();
+		tab1_controller.setMain(this, data);
+
+		// Init tab2
+		final FXMLLoader tab2 = new FXMLLoader(getClass().getResource("views/tab2.fxml"));
+		mainController.tab2.setContent(tab2.load());
+		final Tab2Controller tab2_controller = t2_controller = tab2.getController();
+		tab2_controller.setMain(this);
 
 		this.stage = stage;
 		stage.setTitle("Parabot Mapper");
 		stage.setScene(scene);
-		resizeTo(tab1().pane_tab1.getPrefWidth() + 15, tab1().pane_tab1.getPrefHeight() + 60);
+		resizeTo(tab1().pane.getPrefWidth() + 15, tab1().pane.getPrefHeight() + 60);
 		stage.show();
 
 		recentFiles.add(new File(

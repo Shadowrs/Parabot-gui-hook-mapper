@@ -6,106 +6,92 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root_anchor_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
+
+<AnchorPane fx:id="pane" prefHeight="365.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
    <children>
-      <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab fx:id="tab_interfaces" text="Interfaces">
-               <content>
-                  <AnchorPane fx:id="pane_tab1" prefHeight="365.0" prefWidth="587.0">
-                     <children>
-                        <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="217.0">
-                          <columns>
-                            <TableColumn fx:id="column1_apiInterClass" prefWidth="114.0" text="API Accesor" />
-                            <TableColumn fx:id="column2_clientClass" prefWidth="102.0" text="Client Class" />
-                          </columns>
-                           <tooltip>
-                              <Tooltip text="Hook file &lt;interface&gt; entry for a class and api interface" />
-                           </tooltip>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                        <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="141.0">
-                           <contextMenu>
-                              <ContextMenu>
-                                <items>
-                                  <MenuItem fx:id="menuitem_link_api_interface" mnemonicParsing="false" onAction="#onAction" text="Link to selected client class" />
-                                </items>
-                              </ContextMenu>
-                           </contextMenu>
-                           <tooltip>
-                              <Tooltip text="API Accessor classes appear here" />
-                           </tooltip></ListView>
-                        <ListView fx:id="list2" layoutX="181.0" layoutY="117.0" prefHeight="230.0" prefWidth="142.0">
-                           <contextMenu>
-                              <ContextMenu>
-                                <items>
-                                  <MenuItem fx:id="menuitem_link_class" mnemonicParsing="false" onAction="#onAction" text="Link to selected API Accessor" />
-                                </items>
-                              </ContextMenu>
-                           </contextMenu>
-                           <tooltip>
-                              <Tooltip text="Client JAR classes appear here" />
-                           </tooltip></ListView>
-                        <Button fx:id="select_jar_api" layoutX="78.0" layoutY="14.0" mnemonicParsing="false" text="Select JAR">
-                           <tooltip>
-                              <Tooltip text="Browse for a Parabot-api.jar" />
-                           </tooltip></Button>
-                        <Label fx:id="label_path_1" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
-                           <padding>
-                              <Insets right="5.0" />
-                           </padding>
-                           <tooltip>
-                              <Tooltip fx:id="tt_apijarpath" text="JAR not loaded" />
-                           </tooltip></Label>
-                        <Button fx:id="load_jar_api" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
-                           <tooltip>
-                              <Tooltip text="Click Load once you have selected a JAR" />
-                           </tooltip></Button>
-                        <Label layoutX="226.0" layoutY="18.0" text="Path:" />
-                        <Label layoutX="25.0" layoutY="88.0" text="API Accessors" />
-                        <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
-                        <Button fx:id="select_jar_client" layoutX="78.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
-                           <tooltip>
-                              <Tooltip text="Browse for a RSPS client JAR" />
-                           </tooltip>
-                        </Button>
-                        <Label layoutX="226.0" layoutY="53.0" text="Path:" />
-                        <Label fx:id="label_path_2" layoutX="263.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
-                           <padding>
-                              <Insets right="5.0" />
-                           </padding>
-                           <tooltip>
-                              <Tooltip fx:id="tt_clientjarpath" text="JAR not loaded" />
-                           </tooltip>
-                        </Label>
-                        <Button fx:id="load_jar_client" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
-                           <tooltip>
-                              <Tooltip text="Click Load once you select a JAR" />
-                           </tooltip>
-                        </Button>
-                        <Label layoutX="14.0" layoutY="18.0" text="API:" />
-                        <Label layoutX="14.0" layoutY="53.0" text="Client:" />
-                        <Label layoutX="357.0" layoutY="88.0" text="API Acessor to Client Class Bindings" />
-                     </children>
-                  </AnchorPane>
-               </content>
-               <tooltip>
-                  <Tooltip text="Here you can customize the hooks file &lt;interfaces&gt; entries binding &lt;interface&gt; to &lt;class&gt;" />
-               </tooltip></Tab>
-          <Tab fx:id="tab_getters" text="Getters">
-               <content>
-                  <AnchorPane fx:id="pane_tab2" prefHeight="200.0" prefWidth="200.0" />
-               </content></Tab>
-        </tabs>
-      </TabPane>
+      <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="217.0">
+        <columns>
+          <TableColumn fx:id="column1_apiInterClass" prefWidth="114.0" text="API Accesor" />
+          <TableColumn fx:id="column2_clientClass" prefWidth="102.0" text="Client Class" />
+        </columns>
+         <tooltip>
+            <Tooltip text="Hook file &lt;interface&gt; entry for a class and api interface" />
+         </tooltip>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="141.0">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem fx:id="menuitem_link_api_interface" mnemonicParsing="false" onAction="#onAction" text="Link to selected client class" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+         <tooltip>
+            <Tooltip text="API Accessor classes appear here" />
+         </tooltip>
+      </ListView>
+      <ListView fx:id="list2" layoutX="181.0" layoutY="117.0" prefHeight="230.0" prefWidth="142.0">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem fx:id="menuitem_link_class" mnemonicParsing="false" onAction="#onAction" text="Link to selected API Accessor" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+         <tooltip>
+            <Tooltip text="Client JAR classes appear here" />
+         </tooltip>
+      </ListView>
+      <Button fx:id="select_jar_api" layoutX="78.0" layoutY="14.0" mnemonicParsing="false" text="Select JAR">
+         <tooltip>
+            <Tooltip text="Browse for a Parabot-api.jar" />
+         </tooltip>
+      </Button>
+      <Label fx:id="label_path_1" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+         <tooltip>
+            <Tooltip fx:id="tt_apijarpath" text="JAR not loaded" />
+           </tooltip>
+      </Label>
+      <Button fx:id="load_jar_api" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
+         <tooltip>
+            <Tooltip text="Click Load once you have selected a JAR" />
+         </tooltip>
+      </Button>
+      <Label layoutX="226.0" layoutY="18.0" text="Path:" />
+      <Label layoutX="25.0" layoutY="88.0" text="API Accessors" />
+      <Label layoutX="181.0" layoutY="89.0" text="Client Classes" />
+      <Button fx:id="select_jar_client" layoutX="78.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Select JAR">
+         <tooltip>
+            <Tooltip text="Browse for a RSPS client JAR" />
+         </tooltip>
+      </Button>
+      <Label layoutX="226.0" layoutY="53.0" text="Path:" />
+      <Label fx:id="label_path_2" layoutX="263.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="311.0" text="No Client JAR selected">
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+         <tooltip>
+            <Tooltip fx:id="tt_clientjarpath" text="JAR not loaded" />
+         </tooltip>
+      </Label>
+      <Button fx:id="load_jar_client" layoutX="152.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAction" text="Load JAR">
+         <tooltip>
+            <Tooltip text="Click Load once you select a JAR" />
+         </tooltip>
+      </Button>
+      <Label layoutX="14.0" layoutY="18.0" text="API:" />
+      <Label layoutX="14.0" layoutY="53.0" text="Client:" />
+      <Label layoutX="357.0" layoutY="88.0" text="API Acessor to Client Class Bindings" />
    </children>
 </AnchorPane>

@@ -38,14 +38,9 @@ public class Tab1Controller {
 	@FXML public MenuItem menuitem_link_class;
 	@FXML public TableColumn<InterfaceBind, String> column1_apiInterClass;
 	@FXML public TableColumn<InterfaceBind, String> column2_clientClass;
-	@FXML public Tab tab_interfaces;
-	@FXML public Tab tab_getters;
 	@FXML public Tooltip tt_clientjarpath;
 	@FXML public Tooltip tt_apijarpath;
-	@FXML public TabPane tabpane1;
-	@FXML public AnchorPane root_anchor_pane;
-	@FXML public AnchorPane pane_tab1;
-	@FXML public AnchorPane pane_tab2;
+	@FXML public AnchorPane pane;
 
 	public void setMain(ManualMapper main, ApiData data) {
 		this.main = main;
@@ -127,6 +122,10 @@ public class Tab1Controller {
 		}
 	}
 
+	public void onTabOpened() {
+		main.resizeTo(pane.getPrefWidth() + 15, pane.getPrefHeight() + 60);
+	}
+
 	public static class InterfaceBind {
 		private final SimpleStringProperty apiClass;
 		private final SimpleStringProperty clientClass;
@@ -196,14 +195,6 @@ public class Tab1Controller {
 						}
 					}
 				};
-			}
-		});
-
-		tabpane1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue == tab_getters) {
-				main.tab2().onTabOpened();
-			} else if (newValue == tab_interfaces) {
-				main.resizeTo(pane_tab1.getPrefWidth() + 15, pane_tab1.getPrefHeight() + 60);
 			}
 		});
 

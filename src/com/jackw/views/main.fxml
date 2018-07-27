@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootpane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.MainController">
+   <children>
+      <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tab1" text="Interfaces">
+               <content>
+               </content>
+               <tooltip>
+                  <Tooltip text="Here you can customize the hooks file &lt;interfaces&gt; entries binding &lt;interface&gt; to &lt;class&gt;" />
+               </tooltip>
+               <content>
+                  <AnchorPane fx:id="tab1_pane" prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
+          <Tab fx:id="tab2" text="Getters">
+               <content>
+                  <AnchorPane fx:id="tab2_pane" prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
