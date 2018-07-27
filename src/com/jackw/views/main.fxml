@@ -9,7 +9,7 @@
    <children>
       <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tab1" text="Interfaces">
+          <Tab fx:id="tab1" text="Accessors">
                <content>
                </content>
                <tooltip>
@@ -18,7 +18,7 @@
                <content>
                   <AnchorPane fx:id="tab1_pane" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
-          <Tab fx:id="tab2" text="Getters">
+          <Tab fx:id="tab2" text="Getters &amp; Setters">
                <content>
                   <AnchorPane fx:id="tab2_pane" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>

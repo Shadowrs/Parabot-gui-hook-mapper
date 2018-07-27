@@ -10,10 +10,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
@@ -27,11 +24,13 @@ public class Tab2Controller {
 	@FXML public ChoiceBox<JavaField> box_api_fields;
 	@FXML public ChoiceBox<JavaField> box_client_fields_typed;
 	@FXML public ChoiceBox<JavaField> box_client_all_fields;
-	@FXML public TextField txt_client_class;
+	@FXML public TextField text_client_class;
 	@FXML public Button button_bind_getter;
 	@FXML public Label label_api_fields;
 	@FXML public Label label_client_fields_typed;
 	@FXML public Label label_all_client_fields;
+	@FXML public CheckBox tickbox_static;
+	@FXML public Button button_setter;
 
 	public void setMain(ManualMapper main) {
 		this.main = main;
@@ -118,9 +117,9 @@ public class Tab2Controller {
 			box_client_all_fields.setItems(FXCollections.observableArrayList(
 					main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass()))
 							.findFirst().get().fields));
-			txt_client_class.setText(ib.getClientClass());
+			text_client_class.setText(ib.getClientClass());
 
-			label_all_client_fields.setText("3. Alternative: All Client Fields ("+
+			label_all_client_fields.setText("3. Alternative: All "+text_client_class.getText()+" Fields ("+
 					box_client_all_fields.getItems().size()+") :");
 		});
 
@@ -128,7 +127,7 @@ public class Tab2Controller {
 			box_client_fields_typed.setDisable(false);
 
 			Tab1Controller.InterfaceBind ib = main.tab1().table1.getItems()
-					.filtered(pbLink -> pbLink.getClientClass().equals(txt_client_class.getText()))
+					.filtered(pbLink -> pbLink.getClientClass().equals(text_client_class.getText()))
 					.get(0);
 
 			box_client_fields_typed.setItems(FXCollections.observableArrayList(
@@ -136,7 +135,7 @@ public class Tab2Controller {
 							.findFirst().get().fields.stream().filter(f -> f.typeMatch(newValue))
 							.collect(Collectors.toList())
 			));
-			label_client_fields_typed.setText("3. Available Client Fields by Type ("+
+			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");
 
 		});
@@ -207,6 +206,9 @@ public class Tab2Controller {
 		box_client_fields_typed.setItems(FXCollections.observableArrayList());
 		box_client_all_fields.getSelectionModel().clearSelection();
 		box_client_all_fields.setItems(FXCollections.observableArrayList());
-		txt_client_class.setText("?");
+		text_client_class.setText("?");
+		label_api_fields.setText("2. Available API fields:");
+		label_client_fields_typed.setText("3. Available Client Fields by Type:");
+		label_all_client_fields.setText("3. Alternative: All Client Class Fields:");
 	}
 }

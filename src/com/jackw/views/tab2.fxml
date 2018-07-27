@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Controller">
+<AnchorPane fx:id="rootpane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab2Controller">
    <children>
       <Label fx:id="label_locked" alignment="CENTER" layoutX="68.0" layoutY="157.0" prefHeight="98.0" prefWidth="464.0" text="You must load a Parabot API JAR &#10;and a Client JAR to unlock this tab" textAlignment="CENTER">
          <font>
@@ -23,26 +24,36 @@
       <Label fx:id="label_api_fields" layoutX="36.0" layoutY="105.0" text="2. Available API fields:" />
       <ChoiceBox fx:id="box_api_fields" disable="true" layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
       <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
-      <TextField fx:id="txt_client_class" editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
+      <TextField fx:id="text_client_class" editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
       <Label fx:id="label_client_fields_typed" layoutX="36.0" layoutY="140.0" text="3. Available Client Fields by Type:" />
       <ChoiceBox fx:id="box_client_fields_typed" disable="true" layoutX="242.0" layoutY="136.0" prefHeight="25.0" prefWidth="254.0" />
-      <Label fx:id="label_all_client_fields" layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Fields:" />
-      <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="225.0" layoutY="172.0" prefHeight="25.0" prefWidth="271.0" />
-      <Button fx:id="button_bind_getter" layoutX="508.0" layoutY="149.0" mnemonicParsing="false" onAction="#onAction" text="Bind Getter" />
-      <Separator layoutY="208.0" prefHeight="3.0" prefWidth="601.0" />
-      <Label layoutX="26.0" layoutY="238.0" text="Existing Getter&#10;bindings" />
-      <TableView layoutX="111.0" layoutY="221.0" prefHeight="136.0" prefWidth="476.0">
+      <Label fx:id="label_all_client_fields" layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Class Fields:" />
+      <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="242.0" layoutY="172.0" prefHeight="25.0" prefWidth="254.0" />
+      <Button fx:id="button_bind_getter" layoutX="423.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Getter" />
+      <Separator layoutY="295.0" prefHeight="3.0" prefWidth="601.0" />
+      <Label layoutX="20.0" layoutY="362.0" text="Existing Getter&#10;bindings" />
+      <TableView layoutX="106.0" layoutY="311.0" prefHeight="136.0" prefWidth="476.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="75.0" text="Accessor" />
+          <TableColumn prefWidth="75.0" text="Field" />
+            <TableColumn prefWidth="75.0" text="Type" />
+            <TableColumn prefWidth="75.0" text="Cl. Class" />
+            <TableColumn prefWidth="75.0" text="Cl. Field" />
+            <TableColumn prefWidth="75.0" text="Cl. F. Type" />
         </columns>
       </TableView>
-      <Label layoutX="26.0" layoutY="414.0" text="Existing Setter&#10;bindings" />
-      <TableView layoutX="111.0" layoutY="373.0" prefHeight="136.0" prefWidth="476.0">
+      <Label layoutX="21.0" layoutY="514.0" text="Existing Setter&#10;bindings" />
+      <TableView layoutX="106.0" layoutY="463.0" prefHeight="136.0" prefWidth="476.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="75.0" text="Accessor" />
+            <TableColumn prefWidth="75.0" text="Field" />
+            <TableColumn prefWidth="75.0" text="Type" />
+            <TableColumn prefWidth="75.0" text="Cl. Class" />
+            <TableColumn prefWidth="75.0" text="Cl. Field" />
+            <TableColumn prefWidth="75.0" text="Cl. F. Type" />
          </columns>
       </TableView>
+      <Button fx:id="button_setter" layoutX="343.0" layoutY="255.0" mnemonicParsing="false" text="Bind Setter" />
+      <CheckBox fx:id="tickbox_static" layoutX="179.0" layoutY="259.0" mnemonicParsing="false" text="Make new method static" />
    </children>
 </AnchorPane>

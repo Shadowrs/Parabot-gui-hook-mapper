@@ -1,3 +1,4 @@
+/* To enable multi-line via '\n' in Text of Tooltips */
 .tooltip-inner {
     white-space: pre-line;
 }
