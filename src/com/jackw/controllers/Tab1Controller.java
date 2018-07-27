@@ -153,7 +153,7 @@ public class Tab1Controller {
 	}
 
 	@FXML public void initialize() {
-		System.out.println("initialzing!");
+		System.out.println("initializing...");
 
 		column1_apiInterClass.setCellValueFactory(new PropertyValueFactory<>("apiClass"));
 		column2_clientClass.setCellValueFactory(new PropertyValueFactory<>("clientClass"));

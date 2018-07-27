@@ -41,11 +41,9 @@ public class Tab2Controller {
 
 	@FXML
 	public void initialize() {
-		rootpane.getChildren().forEach(c -> {
-			if (c != label_locked) {
-				c.setDisable(true);
-				c.setOpacity(0.15);
-			}
+		rootpane.getChildren().stream().filter(c -> c != label_locked).forEach(c -> {
+			c.setDisable(true);
+			c.setOpacity(0.15);
 		});
 		System.out.println("set all components on this anchor pane to disabled + opacity=0.15");
 
@@ -161,11 +159,7 @@ public class Tab2Controller {
 
 	public void unlockPanel() {
 		label_locked.setVisible(false); // hide warning
-		rootpane.getChildren().stream().forEach(c -> {
-			if (c != label_locked) {
-				c.setOpacity(1);
-			}
-		});
+		rootpane.getChildren().stream().filter(c -> c != label_locked).forEach(c -> c.setOpacity(1));
 		box_accessor.setDisable(false); // enable the first box
 		button_bind_getter.setDisable(false);
 
@@ -173,11 +167,9 @@ public class Tab2Controller {
 
 	public void lockPanel() {
 		label_locked.setVisible(true); // hide warning
-		rootpane.getChildren().forEach(c -> {
-			if (c != label_locked) {
-				c.setOpacity(0.15);
-				c.setDisable(true);
-			}
+		rootpane.getChildren().stream().filter(c -> c != label_locked).forEach(c -> {
+			c.setOpacity(0.15);
+			c.setDisable(true);
 		});
 	}
 
@@ -206,10 +198,7 @@ public class Tab2Controller {
 			lockPanel();
 			return;
 		}
-		List<ApiInterface> items = new ArrayList<>(0);
-		main.tab1().table1.getItems().stream().map(Tab1Controller.InterfaceBind::getApiClass).forEach(e -> {
-			items.add(main.tab1().list1.getItems().stream().filter(i -> i.name.equals(e)).findFirst().get());
-		});
+		List<ApiInterface> items = main.tab1().table1.getItems().stream().map(Tab1Controller.InterfaceBind::getApiClass).map(e -> main.tab1().list1.getItems().stream().filter(i -> i.name.equals(e)).findFirst().get()).collect(Collectors.toCollection(() -> new ArrayList<>(0)));
 		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val
 		box_accessor.setItems(FXCollections.observableArrayList(items));
 		box_api_fields.getSelectionModel().clearSelection();
