@@ -75,7 +75,7 @@ public class ManualMapper extends Application {
 				.toPath());
 
 		// Fast populate for testing
-		data.pbApi = new PbApi(data, new File("pb-317-min-api.jar"));
+		data.pbApi = new PbApi(new File("pb-317-min-api.jar"));
 		data.client = new RspsClient(new File("dreamscape.jar"));
 
 		tab1_controller.list1.getItems().addAll(data.pbApi.interfaces);
@@ -89,6 +89,8 @@ public class ManualMapper extends Application {
 				data.client.entries.get(2)));
 
 		tab2_controller.unlockPanel();
+
+
 	}
 
 	public ApiData getData() {

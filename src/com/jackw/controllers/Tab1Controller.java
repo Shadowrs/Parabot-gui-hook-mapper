@@ -216,7 +216,7 @@ public class Tab1Controller {
 						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
 						menuItem.setOnAction(event1 -> {
 							if (api) {
-								data.pbApi = new PbApi(data, f);
+								data.pbApi = new PbApi(f);
 							} else {
 								data.client = new RspsClient(f);
 							}
@@ -234,7 +234,7 @@ public class Tab1Controller {
 				File f = fc.showOpenDialog(main.getStage());
 				if (f != null && f.getPath().endsWith(".jar")) {
 					if (api) {
-						data.pbApi = new PbApi(data, f);
+						data.pbApi = new PbApi(f);
 					} else {
 						data.client = new RspsClient(f);
 					}
