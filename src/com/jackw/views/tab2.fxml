@@ -53,7 +53,7 @@
             <TableColumn prefWidth="75.0" text="Cl. F. Type" />
          </columns>
       </TableView>
-      <Button fx:id="button_setter" layoutX="343.0" layoutY="255.0" mnemonicParsing="false" text="Bind Setter" />
-      <CheckBox fx:id="tickbox_static" layoutX="179.0" layoutY="259.0" mnemonicParsing="false" text="Make new method static" />
+      <Button fx:id="button_setter" layoutX="343.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Setter" />
+      <CheckBox fx:id="tickbox_static" layoutX="179.0" layoutY="259.0" mnemonicParsing="false" onAction="#onAction" text="Make new method static" />
    </children>
 </AnchorPane>

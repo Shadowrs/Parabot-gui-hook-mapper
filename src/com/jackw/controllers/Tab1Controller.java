@@ -70,12 +70,9 @@ public class Tab1Controller {
 				StringBuilder sb = new StringBuilder();
 				sb.append("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
 				sb.append("\nAccessor count: "+data.pbApi.interfaces.size());
-				data.pbApi.interfaces.forEach(i -> {
-					sb.append("\n\t"+i.name+" has "+i.fields.size()+" fields");
-				});
+				data.pbApi.interfaces.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" methods"));
 				tt_apijarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
-				onLoadJar();
 			}
 		}
 		else if (target == load_jar_client) {
@@ -83,9 +80,12 @@ public class Tab1Controller {
 				label_path_2.setText("No Client JAR selected!");
 			} else {
 				list2.setItems(FXCollections.observableArrayList(data.client.entries));
-				tt_clientjarpath.setText("Loaded at: "+data.client.clientFile.getAbsolutePath()+"\nClass count: "+data.client.entries.size());
+				StringBuilder sb = new StringBuilder();
+				sb.append("Loaded at: "+data.client.clientFile.getAbsolutePath());
+				sb.append("\nAccessor count: "+data.client.entries.size());
+				data.client.entries.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" fields | "+i.interfaceCountASM()+" interfaces | "+i.methodCountASM()+" methods"));
+				tt_clientjarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
-				onLoadJar();
 			}
 		} else if (target == menuitem_link_api_interface) {
 			link();
@@ -95,9 +95,6 @@ public class Tab1Controller {
 			System.out.println(target.toString());
 			Notifications.create().title("Parabot Mapper").text("Action missing: "+target.toString()).show();
 		}
-	}
-
-	private void onLoadJar() {
 	}
 
 	private void link() {
@@ -202,7 +199,7 @@ public class Tab1Controller {
 		System.out.println("ready");
 	}
 
-	private void createContextMenuBrowseForJar(Button button, List<Path> recentFiles, boolean api, Label label) {
+	private void createContextMenuBrowseForJar(Button button, List<Path> xRecent, boolean api, Label label) {
 		button.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 			ContextMenu menu = Optional.ofNullable(button.getContextMenu()).orElseGet(() -> {
 				ContextMenu m = new ContextMenu();
@@ -210,18 +207,27 @@ public class Tab1Controller {
 				return m;
 			});
 			List<MenuItem> items = new ArrayList<>(0);
-			recentFiles.stream()
+			xRecent.stream()
 					.map(Path::toFile)
 					.forEach(f -> {
 						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
 						menuItem.setOnAction(event1 -> {
 							if (api) {
-								data.pbApi = new PbApi(f);
+								data.pbApi = f.getAbsolutePath().contains("Parabot") ?
+										new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
+								main.tab1().list1.getSelectionModel().clearSelection();
+								main.tab1().list1.getItems().clear();
 							} else {
-								data.client = new RspsClient(f);
+								data.client = f.getAbsolutePath().contains("Parabot") ?
+										new RspsClient(false, f) : new RspsClient(f);
+								main.tab1().list2.getSelectionModel().clearSelection();
+								main.tab1().list2.getItems().clear();
 							}
 							label.setText(f.getAbsolutePath());
-							Notifications.create().title("Parabot Mapper").text("Loaded API JAR at "+f.getAbsolutePath()).show();
+							Notifications.create().title("Parabot Mapper").text("Loaded "+(f.getAbsolutePath().
+									contains("Parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
+							main.tab1().table1.getItems().clear();
+							main.tab1().table1.getSelectionModel().clearSelection();
 						});
 						items.add(menuItem);
 					});
@@ -234,14 +240,23 @@ public class Tab1Controller {
 				File f = fc.showOpenDialog(main.getStage());
 				if (f != null && f.getPath().endsWith(".jar")) {
 					if (api) {
-						data.pbApi = new PbApi(f);
+						data.pbApi = f.getAbsolutePath().contains("Parabot") ?
+								new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
+						main.tab1().list1.getSelectionModel().clearSelection();
+						main.tab1().list1.getItems().clear();
 					} else {
-						data.client = new RspsClient(f);
+						data.client = f.getAbsolutePath().contains("Parabot") ?
+								new RspsClient(false, f) : new RspsClient(f);
+						main.tab1().list2.getSelectionModel().clearSelection();
+						main.tab1().list2.getItems().clear();
 					}
 					label.setText(f.getAbsolutePath());
-					Notifications.create().title("Parabot Mapper").text("Loaded "+(api?"API":"Client")+" JAR at "+f.getAbsolutePath()).show();
-					if (!recentFiles.contains(f.toPath()))
-						recentFiles.add(f.toPath());
+					Notifications.create().title("Parabot Mapper").text("Loaded "+(api?"API":"Client")+" JAR at "+
+							f.getAbsolutePath()).show();
+					main.tab1().table1.getItems().clear();
+					main.tab1().table1.getSelectionModel().clearSelection();
+					if (!xRecent.contains(f.toPath()))
+						xRecent.add(f.toPath());
 				}
 			});
 			items.add(fileBrowse);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" packages="nl.bartpelle.veteres">
+	<Appenders>
+		<!--<Raven name="Sentry">
+				<dsn>YOUR SENTRY DSN</dsn>
+			</Raven>--> <!-- Comment out for Sentry (also below!) -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d{HH:mm:ss.SSS} %-5level] %-20.20c{1} | %msg%n"/>
+		</Console>
+		<File name="File" fileName="error.log" append="false">
+			<PatternLayout pattern="[%d{ISO8601} %-5level] %logger{36} - %msg%n"/>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef level="error" ref="File"/>
+			<AppenderRef level="all" ref="Console"/>
+			<!--<AppenderRef level="error" ref="Sentry"/>--> <!-- Comment out for Sentry (also above!) -->
+		</Root>
+	</Loggers>
+</Configuration>
