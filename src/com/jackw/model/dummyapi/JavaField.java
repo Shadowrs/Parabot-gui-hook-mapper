@@ -69,10 +69,10 @@ public class JavaField implements Comparable<JavaField> {
 
 	private String getDisplayForApiMethodType() {
 		String args = argsToString();
-		return descToTypeOnly(methodNode.desc)+" "+name+(args.length() == 0 ? "()" : args);
+		return descToTypeOnly(methodNode.desc)+" "+name+(args.length() == 0 ? "()" : "("+args+")");
 	}
 
-	private String argsToString() {
+	public String argsToString() {
 		return argsToString(Type.getArgumentTypes(methodNode.desc));
 	}
 
@@ -144,7 +144,6 @@ public class JavaField implements Comparable<JavaField> {
 		if (argumentTypes == null || argumentTypes.length == 0)
 			return "";
 		StringBuilder sb = new StringBuilder();
-		sb.append("(");
 		for (Type a : argumentTypes) {
 			String desc = a.getDescriptor();
 			int arrayDimensions = 0;
@@ -202,7 +201,7 @@ public class JavaField implements Comparable<JavaField> {
 				.toArray(new String[0])));*/
 
 		sb.append(")");
-		return sb.toString().replace(", )", ")");
+		return sb.toString().replace(", )", "");
 	}
 
 	public String getDisplayForASMType() {
@@ -215,5 +214,17 @@ public class JavaField implements Comparable<JavaField> {
 
 	public boolean isType(String type) {
 		return descToTypeOnly().equals(type);
+	}
+
+	public boolean hasExactArgCount(int i) {
+		return methodNode != null && Type.getArgumentTypes(methodNode.desc).length == i;
+	}
+
+	public boolean firstArgIsType(String type) {
+		return methodNode != null && argsToString().equals(type);
+	}
+
+	public int argCount() {
+		return methodNode != null ? Type.getArgumentTypes(methodNode.desc).length : 0;
 	}
 }

@@ -151,17 +151,29 @@ public class Tab2Controller {
 			if (newValue == null) return;
 			box_client_fields_typed.setDisable(false);
 
-			System.out.println("Looking for matches of "+newValue.getDisplayForASMType());
 
 			List<JavaField> list = current_assoc_class.getFields().stream().filter(newValue::typeMatch).collect(Collectors.toList());
+
+			// [Getters] Look for mapped accessor->client class matches
 			String accessorType = newValue.descToTypeOnly();
 			List<Tab1Controller.InterfaceBind> alts = main.tab1().table1.getItems().stream().filter(ib -> ib.getApiClass().equals(accessorType)).collect(Collectors.toList());
 			if (alts.size() > 0) {
 				// will only be 1 match
-				String clientClass = alts.get(0).getClientClass();
+				final String clientClass = alts.get(0).getClientClass();
 				list.addAll(current_assoc_class.getFields().stream().filter(v -> v.isType(clientClass)).collect(Collectors.toList()));
 			}
 
+			// [Setters] Look for any method with one argument matching the type. Return must be void.. not sure if
+			// Parabot supports return types of Types. would always return a null value anyway unless you insert a chain reference
+			if (newValue.descToTypeOnly().equals("Void") && newValue.hasExactArgCount(1)) {
+				alts = main.tab1().table1.getItems().stream().filter(ib -> ib.getApiClass().equals(newValue.argsToString())).collect(Collectors.toList());
+				if (alts.size() > 0) {
+					final String clientClass = alts.get(0).getClientClass();
+					// The paramater is the same accessor
+					list.addAll(current_assoc_class.getFields().stream().filter(v -> v.isType(clientClass)).collect(Collectors.toList()));
+				}
+			}
+			System.out.println("Search complete for matches of "+newValue.getDisplayForASMType()+" // "+accessorType+" // "+newValue.argCount()+" // "+newValue.argsToString());
 
 			box_client_fields_typed.setItems(FXCollections.observableArrayList(list));
 
