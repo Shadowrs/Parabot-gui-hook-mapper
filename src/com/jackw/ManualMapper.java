@@ -55,7 +55,7 @@ public class ManualMapper extends Application {
 		final FXMLLoader tab1 = new FXMLLoader(getClass().getResource("views/tab1.fxml"));
 		mainController.tab1.setContent(tab1.load());
 		final Tab1Controller tab1_controller = t1_controller = tab1.getController();
-		tab1_controller.setMain(this, data);
+		tab1_controller.setMain(this);
 
 		// Init tab2
 		final FXMLLoader tab2 = new FXMLLoader(getClass().getResource("views/tab2.fxml"));

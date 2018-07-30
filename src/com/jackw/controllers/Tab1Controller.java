@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -44,9 +43,8 @@ public class Tab1Controller {
 	@FXML public AnchorPane pane;
 	@FXML public CheckBox checkbox_hide_inners;
 
-	public void setMain(ManualMapper main, ApiData data) {
+	public void setMain(ManualMapper main) {
 		this.main = main;
-		this.data = data;
 		postInit();
 	}
 
@@ -57,7 +55,6 @@ public class Tab1Controller {
 	}
 
 	private ManualMapper main;
-	private ApiData data;
 
 	@FXML
 	void onAction(ActionEvent e) {
@@ -65,30 +62,30 @@ public class Tab1Controller {
 		assert target != null;
 
 		if (target == load_jar_api) {
-			if (data.pbApi == null) {
+			if (main.data.pbApi == null) {
 				label_path_1.setText("No Api JAR selected!");
 			} else {
-				list1.setItems(FXCollections.observableArrayList(data.pbApi.interfaces));
+				list1.setItems(FXCollections.observableArrayList(main.data.pbApi.interfaces));
 				StringBuilder sb = new StringBuilder();
-				sb.append("Loaded at: "+data.pbApi.apiJar.getAbsolutePath());
-				sb.append("\nAccessor count: "+data.pbApi.interfaces.size());
-				data.pbApi.interfaces.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" methods"));
+				sb.append("Loaded at: "+main.data.pbApi.apiJar.getAbsolutePath());
+				sb.append("\nAccessor count: "+main.data.pbApi.interfaces.size());
+				main.data.pbApi.interfaces.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" methods"));
 				tt_apijarpath.setText(sb.toString());
-				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
+				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR").show();
 				main.tab2().updateAccessorsListItems();
 			}
 		}
 		else if (target == load_jar_client) {
-			if (data.client == null) {
+			if (main.data.client == null) {
 				label_path_2.setText("No Client JAR selected!");
 			} else {
-				list2.setItems(FXCollections.observableArrayList(data.client.getClasses(checkbox_hide_inners.isSelected())));
+				list2.setItems(FXCollections.observableArrayList(main.data.client.getClasses(checkbox_hide_inners.isSelected())));
 				StringBuilder sb = new StringBuilder();
-				sb.append("Loaded at: "+data.client.clientFile.getAbsolutePath());
-				sb.append("\nAccessor count: "+data.client.entries.size());
-				data.client.entries.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" fields | "+i.interfaceCountASM()+" interfaces | "+i.methodCountASM()+" methods"));
+				sb.append("Loaded at: "+main.data.client.clientFile.getAbsolutePath());
+				sb.append("\nAccessor count: "+main.data.client.entries.size());
+				main.data.client.entries.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" fields | "+i.interfaceCountASM()+" interfaces | "+i.methodCountASM()+" methods"));
 				tt_clientjarpath.setText(sb.toString());
-				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
+				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR").show();
 				main.tab2().updateAccessorsListItems();
 			}
 		} else if (target == menuitem_link_api_interface) {
@@ -96,7 +93,7 @@ public class Tab1Controller {
 		} else if (target == menuitem_link_class) {
 			bind();
 		} else if (target.toString().contains("id=checkbox_hide_inners")) {
-			list2.setItems(FXCollections.observableArrayList(data.client.getClasses(checkbox_hide_inners.isSelected())));
+			list2.setItems(FXCollections.observableArrayList(main.data.client.getClasses(checkbox_hide_inners.isSelected())));
 			Logger.info("Tab1Controller", "Toggled hide inners");
 		}
 		else {
@@ -230,18 +227,18 @@ public class Tab1Controller {
 						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
 						menuItem.setOnAction(event1 -> {
 							if (api) {
-								data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
+								main.data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 										new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
 								main.tab1().list1.getSelectionModel().clearSelection();
 								main.tab1().list1.getItems().clear();
 							} else {
-								data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
+								main.data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 										new RspsClient(false, f) : new RspsClient(f);
 								main.tab1().list2.getSelectionModel().clearSelection();
 								main.tab1().list2.getItems().clear();
 							}
 							label.setText(f.getAbsolutePath());
-							Notifications.create().title("Parabot Mapper").text("Loaded "+(f.getAbsolutePath().toLowerCase().
+							Notifications.create().title("Parabot Mapper").text("Selected "+(f.getAbsolutePath().toLowerCase().
 									contains("parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
 							main.tab1().table1.getItems().clear();
 							main.tab1().table1.getSelectionModel().clearSelection();
@@ -258,18 +255,18 @@ public class Tab1Controller {
 				File f = fc.showOpenDialog(main.getStage());
 				if (f != null && f.getPath().endsWith(".jar")) {
 					if (api) {
-						data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
+						main.data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 								new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
 						main.tab1().list1.getSelectionModel().clearSelection();
 						main.tab1().list1.getItems().clear();
 					} else {
-						data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
+						main.data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 								new RspsClient(false, f) : new RspsClient(f);
 						main.tab1().list2.getSelectionModel().clearSelection();
 						main.tab1().list2.getItems().clear();
 					}
 					label.setText(f.getAbsolutePath());
-					Notifications.create().title("Parabot Mapper").text("Loaded "+(api?"API":"Client")+" JAR at "+
+					Notifications.create().title("Parabot Mapper").text("Selected "+(api?"API":"Client")+" JAR at "+
 							f.getAbsolutePath()).show();
 					main.tab1().table1.getItems().clear();
 					main.tab1().table1.getSelectionModel().clearSelection();
