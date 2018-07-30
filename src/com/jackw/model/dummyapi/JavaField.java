@@ -80,6 +80,10 @@ public class JavaField implements Comparable<JavaField> {
 		return descToTypeOnly(fieldNode.desc)+" "+name+"()";
 	}
 
+	public String descToTypeOnly() {
+		return methodNode != null ? descToTypeOnly(methodNode.desc) : fieldNode != null ? descToTypeOnly(fieldNode.desc) : type.toString();
+	}
+
 	private String descToTypeOnly(String desc) {
 		if (desc.startsWith("(")) { // METHOD
 			desc = desc.substring(desc.lastIndexOf(")")+1);
@@ -207,5 +211,9 @@ public class JavaField implements Comparable<JavaField> {
 
 	public boolean typeNotVoid() {
 		return methodNode == null || !methodNode.desc.endsWith(")V");
+	}
+
+	public boolean isType(String type) {
+		return descToTypeOnly().equals(type);
 	}
 }

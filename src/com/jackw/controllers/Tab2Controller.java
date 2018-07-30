@@ -119,21 +119,27 @@ public class Tab2Controller {
 			Tab1Controller.InterfaceBind ib = main.tab1().table1.getItems()
 					.filtered(pbLink -> pbLink.getApiClass().equals(newValue.name))
 					.get(0);
-			Logger.info("Tab2Controller", "Found bind: "+ib);
+			//Logger.info("Tab2Controller", "Found bind: "+ib);
 
 			box_client_all_fields.setDisable(false);
 
 			long s1 = System.currentTimeMillis();
+
 			current_assoc_class = main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().get();
 			list = current_assoc_class.getFields();
-			Logger.warning("Tab2Controller", "Generated List<JField> in "+(System.currentTimeMillis()-s1)+"ms");
+
+			if (list.size() > 100)
+				Logger.warning("Tab2Controller", "Generated List<JField> in "+(System.currentTimeMillis()-s1)+"ms");
 
 			long s = System.currentTimeMillis();
 			if (list.size() > 100) {
 				Logger.warning("Tab2Controller", "Setting inner Items of ChoiceBox - but count is "+list.size()+" -- this can be slow!");
 			}
+
 			box_client_all_fields.setItems(list);
-			Logger.warning("Tab2Controller", "ChoiceBox Item list set in "+(System.currentTimeMillis()-s)+"ms");
+
+			if (list.size() > 100)
+				Logger.warning("Tab2Controller", "ChoiceBox Item list set in "+(System.currentTimeMillis()-s)+"ms");
 
 			text_client_class.setText(ib.getClientClass());
 
@@ -146,7 +152,18 @@ public class Tab2Controller {
 			box_client_fields_typed.setDisable(false);
 
 			System.out.println("Looking for matches of "+newValue.getDisplayForASMType());
-			box_client_fields_typed.setItems(FXCollections.observableArrayList(current_assoc_class.getFields().stream().filter(newValue::typeMatch).collect(Collectors.toList())));
+
+			List<JavaField> list = current_assoc_class.getFields().stream().filter(newValue::typeMatch).collect(Collectors.toList());
+			String accessorType = newValue.descToTypeOnly();
+			List<Tab1Controller.InterfaceBind> alts = main.tab1().table1.getItems().stream().filter(ib -> ib.getApiClass().equals(accessorType)).collect(Collectors.toList());
+			if (alts.size() > 0) {
+				// will only be 1 match
+				String clientClass = alts.get(0).getClientClass();
+				list.addAll(current_assoc_class.getFields().stream().filter(v -> v.isType(clientClass)).collect(Collectors.toList()));
+			}
+
+
+			box_client_fields_typed.setItems(FXCollections.observableArrayList(list));
 
 			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");
