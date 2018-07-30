@@ -13,7 +13,6 @@ public class ClientClass implements Comparable<ClientClass> {
 	public final String name;
 	private final List<JavaField> fields;
 	private final ClassNode node;
-	private static ObservableList<JavaField> cached;
 
 	public ClientClass(String s, List<JavaField> fields) {
 		this.name = s;
@@ -41,12 +40,10 @@ public class ClientClass implements Comparable<ClientClass> {
 	}
 
 	public ObservableList<JavaField> getFields() {
-		if (cached != null)
-			return cached;
 		if (fields.size() > 100) {
 			Logger.warning("ClientClass", "Putting "+fields.size()+" fields into a List -- this will be slow! Please wait...");
 		}
-		return cached = FXCollections.observableArrayList(fields);
+		return FXCollections.observableArrayList(fields);
 	}
 
 	private List<JavaField> asmToDummy(ClassNode node) {

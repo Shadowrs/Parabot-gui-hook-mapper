@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.parabot.core.classpath.ClassPath;
 
 public class RspsClient {
@@ -61,7 +59,7 @@ public class RspsClient {
 		entries = classPath.classes.values().stream().map(v -> new ClientClass((v))).sorted().collect(Collectors.toList());
 	}
 
-	public ObservableList<ClientClass> getClasses(boolean hideInners) {
-		return FXCollections.observableArrayList(!hideInners ? entries : entries.stream().filter(e -> !e.name.contains("$")).collect(Collectors.toList()));
+	public List<ClientClass> getClasses(boolean hideInners) {
+		return !hideInners ? entries : entries.stream().filter(e -> !e.name.contains("$")).collect(Collectors.toList());
 	}
 }
