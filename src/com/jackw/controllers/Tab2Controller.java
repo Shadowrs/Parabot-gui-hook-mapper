@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
@@ -100,8 +101,10 @@ public class Tab2Controller {
 		});
 
 		box_accessor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue == null && newValue == null) return; // no change..
 			if (newValue == null) {
 				current_assoc_class = null;
+				cascadeClearSelections(box_accessor);
 				//System.err.println("how does this happen "+oldValue.name);
 				return;
 			}
@@ -148,7 +151,11 @@ public class Tab2Controller {
 		});
 
 		box_api_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue == null) return;
+			if (oldValue == null && newValue == null) return; // no change..
+			if (newValue == null) {
+				cascadeClearSelections(box_api_fields);
+				return;
+			}
 			box_client_fields_typed.setDisable(false);
 
 
@@ -183,19 +190,39 @@ public class Tab2Controller {
 		});
 
 		box_client_fields_typed.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue == null && newValue == null) return; // no change..
+			// Special case: this has a 'brother' choicebox - cleared when this value is set to NotNull
 			if (newValue != null)
-			if (-1 != box_client_all_fields.getSelectionModel().getSelectedIndex())
-				box_client_all_fields.getSelectionModel().clearSelection();
+				cascadeClearSelections(box_client_fields_typed);
 		});
 
 		box_client_all_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue == null && newValue == null) return; // no change..
+			// Special case: this has a 'brother' choicebox - cleared when this value is set to NotNull
 			if (newValue != null)
-			if (-1 != box_client_fields_typed.getSelectionModel().getSelectedIndex())
-				box_client_fields_typed.getSelectionModel().clearSelection();
+				cascadeClearSelections(box_client_all_fields);
 		});
 
 		System.out.println("[Tab2 Controller] Init complete");
 
+	}
+
+	private void cascadeClearSelections(Node node) {
+		// multiple changes
+		if (Arrays.stream(new Node[]{box_api_fields, box_accessor}).anyMatch(n -> n == node)) {
+			box_client_all_fields.getSelectionModel().clearSelection();
+			box_client_fields_typed.getSelectionModel().clearSelection();
+		}
+		if (node == box_accessor) { // single change
+			box_api_fields.getSelectionModel().clearSelection();
+			text_client_class.setText("?");
+		}
+		if (node == box_client_all_fields) {
+			box_client_fields_typed.getSelectionModel().clearSelection();
+		}
+		if (node == box_client_fields_typed) {
+			box_client_all_fields.getSelectionModel().clearSelection();
+		}
 	}
 
 	public void unlockPanel() {
