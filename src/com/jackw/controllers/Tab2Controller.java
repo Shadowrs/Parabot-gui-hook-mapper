@@ -228,8 +228,7 @@ public class Tab2Controller {
 	public void unlockPanel() {
 		label_locked.setVisible(false); // hide warning
 		rootpane.getChildren().stream().filter(c -> c != label_locked).forEach(c -> c.setOpacity(1));
-		box_accessor.setDisable(false); // enable the first box
-		button_bind_getter.setDisable(false);
+		rootpane.getChildren().stream().filter(c -> !Arrays.asList(box_client_all_fields, box_client_fields_typed, box_api_methods).contains(c)).forEach(c -> c.setDisable(false));
 
 	}
 
