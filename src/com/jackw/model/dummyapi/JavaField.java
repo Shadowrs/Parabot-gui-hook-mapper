@@ -77,7 +77,7 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	private String getDisplayForFieldType() {
-		return descToTypeOnly(fieldNode.desc)+" "+name+"()";
+		return descToTypeOnly(fieldNode.desc)+" "+name; // no () because this is a field not a method
 	}
 
 	public String descToTypeOnly() {
