@@ -9,6 +9,7 @@ import com.jackw.model.dummyapi.RspsClient;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -69,10 +70,12 @@ public class ManualMapper extends Application {
 
 		recentFiles.add(new File(
 				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"pb-317-min-api.jar")
-				.toPath());
+				.toPath()); // dummy, fine with not existing
+		recentFiles.add(Paths.get("C:\\Users\\Jak\\Documents\\Parabot\\cache/RuneWild-api-2454733162.jar"));
 		recentFiles2.add(new File(
 				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"dreamscape.jar")
 				.toPath());
+		recentFiles2.add(Paths.get("C:\\Users\\Jak\\Documents\\Parabot\\cache/RuneWild-client-2441707740.jar"));
 
 		// Fast populate for testing
 		data.pbApi = new PbApi(recentFiles.get(0).toFile());

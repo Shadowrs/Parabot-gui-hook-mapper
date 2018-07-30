@@ -2,6 +2,7 @@ package com.jackw.model.dummyapi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,8 +33,12 @@ public class ApiInterface implements Comparable<ApiInterface> {
 		return methods != null ? methods.size() : node != null ? node.fields.size() : 0;
 	}
 
+	public ObservableList<JavaField> getMethods(Predicate<JavaField> predicate) {
+		return FXCollections.observableArrayList(predicate == null ? methods : methods.stream().filter(predicate).collect(Collectors.toList()));
+	}
+
 	public ObservableList<JavaField> getMethods() {
-		return FXCollections.observableArrayList(methods);
+		return getMethods(null);
 	}
 
 	private List<JavaField> asmToDummy(ClassNode node) {

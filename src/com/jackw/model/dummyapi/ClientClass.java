@@ -7,11 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
+import org.parabot.api.output.Logger;
 
 public class ClientClass implements Comparable<ClientClass> {
 	public final String name;
 	private final List<JavaField> fields;
 	private final ClassNode node;
+	private static ObservableList<JavaField> cached;
 
 	public ClientClass(String s, List<JavaField> fields) {
 		this.name = s;
@@ -39,7 +41,12 @@ public class ClientClass implements Comparable<ClientClass> {
 	}
 
 	public ObservableList<JavaField> getFields() {
-		return FXCollections.observableArrayList(fields);
+		if (cached != null)
+			return cached;
+		if (fields.size() > 100) {
+			Logger.warning("ClientClass", "Putting "+fields.size()+" fields into a List -- this will be slow! Please wait...");
+		}
+		return cached = FXCollections.observableArrayList(fields);
 	}
 
 	private List<JavaField> asmToDummy(ClassNode node) {

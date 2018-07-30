@@ -6,14 +6,17 @@ import com.jackw.model.dummyapi.JavaField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
+import org.parabot.api.output.Logger;
 
 public class Tab2Controller {
 
@@ -61,11 +64,12 @@ public class Tab2Controller {
 		box_api_fields.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.name;
+				return object.getDisplayForApiMethodType();
 			}
 
 			@Override
 			public JavaField fromString(String string) {
+				System.out.println("when "+string);
 				return box_api_fields.getItems().filtered(f -> f.name.equals(string)).get(0);
 			}
 		});
@@ -73,7 +77,7 @@ public class Tab2Controller {
 		box_client_fields_typed.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.name;
+				return object.getDisplayForFieldType();
 			}
 
 			@Override
@@ -85,7 +89,7 @@ public class Tab2Controller {
 		box_client_all_fields.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.name;
+				return object.getDisplayForFieldType();
 			}
 
 			@Override
@@ -100,8 +104,8 @@ public class Tab2Controller {
 				return;
 			}
 			box_api_fields.setDisable(false);
-			box_api_fields.setItems(newValue.getMethods());
-			label_api_fields.setText("2. Available API fields ("+newValue.fieldCount()+") :");
+			box_api_fields.setItems(newValue.getMethods(javaField -> javaField.typeNotVoid()));
+			label_api_fields.setText("2. Available API methods ("+newValue.fieldCount()+") :");
 			label_client_fields_typed.setText("3. Available Client Fields by Type:");
 
 			System.out.println(newValue.name+" v "+ Arrays.toString((String[])main.tab1().table1.getItems().stream()
@@ -112,11 +116,23 @@ public class Tab2Controller {
 			Tab1Controller.InterfaceBind ib = main.tab1().table1.getItems()
 					.filtered(pbLink -> pbLink.getApiClass().equals(newValue.name))
 					.get(0);
+			Logger.info("Tab2Controller", "Found bind: "+ib);
 
 			box_client_all_fields.setDisable(false);
-			box_client_all_fields.setItems(FXCollections.observableArrayList(
+
+			long s1 = System.currentTimeMillis();
+			ObservableList<JavaField> list =
 					main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass()))
-							.findFirst().get().getFields()));
+							.findFirst().get().getFields();
+			Logger.warning("Tab2Controller", "Generated List<JField> in "+(System.currentTimeMillis()-s1)+"ms");
+
+			long s = System.currentTimeMillis();
+			if (list.size() > 100) {
+				Logger.warning("Tab2Controller", "Setting inner Items of ChoiceBox - but count is "+list.size()+" -- this can be slow!");
+			}
+			box_client_all_fields.setItems(list);
+			Logger.warning("Tab2Controller", "ChoiceBox Item list set in "+(System.currentTimeMillis()-s)+"ms");
+
 			text_client_class.setText(ib.getClientClass());
 
 			label_all_client_fields.setText("3. Alternative: All "+text_client_class.getText()+" Fields ("+
@@ -130,11 +146,10 @@ public class Tab2Controller {
 					.filtered(pbLink -> pbLink.getClientClass().equals(text_client_class.getText()))
 					.get(0);
 
-			box_client_fields_typed.setItems(FXCollections.observableArrayList(
-					main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass()))
-							.findFirst().get().getFields().stream().filter(f -> f.typeMatch(newValue))
-							.collect(Collectors.toList())
-			));
+			//Optional<ClientClass> x = Optional.ofNullable(main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst());
+			//if (x.isPresent()) {
+				//box_client_fields_typed.setItems(FXCollections.observableArrayList(x.get().getFields().stream().filter(f -> f.typeMatch(newValue)).collect(Collectors.toList())));
+			//}
 			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");
 
@@ -207,7 +222,7 @@ public class Tab2Controller {
 		box_client_all_fields.getSelectionModel().clearSelection();
 		box_client_all_fields.setItems(FXCollections.observableArrayList());
 		text_client_class.setText("?");
-		label_api_fields.setText("2. Available API fields:");
+		label_api_fields.setText("2. Available API methods:");
 		label_client_fields_typed.setText("3. Available Client Fields by Type:");
 		label_all_client_fields.setText("3. Alternative: All Client Class Fields:");
 	}

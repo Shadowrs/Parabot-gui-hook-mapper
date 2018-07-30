@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
+import org.parabot.api.output.Logger;
 
 public class Tab1Controller {
 
@@ -41,6 +42,7 @@ public class Tab1Controller {
 	@FXML public Tooltip tt_clientjarpath;
 	@FXML public Tooltip tt_apijarpath;
 	@FXML public AnchorPane pane;
+	@FXML public CheckBox checkbox_hide_inners;
 
 	public void setMain(ManualMapper main, ApiData data) {
 		this.main = main;
@@ -79,7 +81,7 @@ public class Tab1Controller {
 			if (data.client == null) {
 				label_path_2.setText("No Client JAR selected!");
 			} else {
-				list2.setItems(FXCollections.observableArrayList(data.client.entries));
+				list2.setItems(FXCollections.observableArrayList(data.client.getClasses(checkbox_hide_inners.isSelected())));
 				StringBuilder sb = new StringBuilder();
 				sb.append("Loaded at: "+data.client.clientFile.getAbsolutePath());
 				sb.append("\nAccessor count: "+data.client.entries.size());
@@ -91,8 +93,12 @@ public class Tab1Controller {
 			link();
 		} else if (target == menuitem_link_class) {
 			link();
-		} else {
-			System.out.println(target.toString());
+		} else if (target.toString().contains("id=checkbox_hide_inners")) {
+			list2.setItems(FXCollections.observableArrayList(data.client.getClasses(checkbox_hide_inners.isSelected())));
+			Logger.info("Tab1Controller", "Toggled hide inners");
+		}
+		else {
+			Logger.info("Tab1Controller", "Target: "+target.toString());
 			Notifications.create().title("Parabot Mapper").text("Action missing: "+target.toString()).show();
 		}
 	}
@@ -146,6 +152,14 @@ public class Tab1Controller {
 
 		public SimpleStringProperty clientClassProperty() {
 			return clientClass;
+		}
+
+		@Override
+		public String toString() {
+			return "InterfaceBind{" +
+					"apiClass=" + apiClass +
+					", clientClass=" + clientClass +
+					'}';
 		}
 	}
 

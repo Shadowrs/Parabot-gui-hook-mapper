@@ -21,7 +21,7 @@
       <Label fx:id="label_steps_fixed" layoutX="36.0" layoutY="36.0" text="Follow the numbered labels to assign a API Getter to a Client Field " />
       <Label layoutX="36.0" layoutY="71.0" text="1. Accessor: " />
       <ChoiceBox fx:id="box_accessor" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
-      <Label fx:id="label_api_fields" layoutX="36.0" layoutY="105.0" text="2. Available API fields:" />
+      <Label fx:id="label_api_fields" layoutX="36.0" layoutY="105.0" text="2. Available API methods:" />
       <ChoiceBox fx:id="box_api_fields" disable="true" layoutX="195.0" layoutY="101.0" prefWidth="150.0" />
       <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
       <TextField fx:id="text_client_class" editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
