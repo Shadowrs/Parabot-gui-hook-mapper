@@ -25,7 +25,7 @@ public class Tab2Controller {
 	@FXML public Label label_locked;
 	@FXML public AnchorPane rootpane;
 	@FXML public ChoiceBox<ApiInterface> box_accessor;
-	@FXML public ChoiceBox<JavaField> box_api_fields;
+	@FXML public ChoiceBox<JavaField> box_api_methods;
 	@FXML public ChoiceBox<JavaField> box_client_fields_typed;
 	@FXML public ChoiceBox<JavaField> box_client_all_fields;
 	@FXML public TextField text_client_class;
@@ -63,7 +63,7 @@ public class Tab2Controller {
 			}
 		});
 
-		box_api_fields.setConverter(new StringConverter<>() {
+		box_api_methods.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
 				return object.getDisplayForASMType();
@@ -72,7 +72,7 @@ public class Tab2Controller {
 			@Override
 			public JavaField fromString(String string) {
 				System.out.println("when "+string);
-				return box_api_fields.getItems().filtered(f -> f.name.equals(string)).get(0);
+				return box_api_methods.getItems().filtered(f -> f.name.equals(string)).get(0);
 			}
 		});
 
@@ -108,9 +108,9 @@ public class Tab2Controller {
 				//System.err.println("how does this happen "+oldValue.name);
 				return;
 			}
-			box_api_fields.setDisable(false);
+			box_api_methods.setDisable(false);
 			ObservableList<JavaField> list = newValue.getMethods();
-			box_api_fields.setItems(list);
+			box_api_methods.setItems(list);
 			label_api_fields.setText("2. Available API methods ("+list.size()+") :");
 			label_client_fields_typed.setText("3. Available Client Fields by Type:");
 
@@ -150,10 +150,10 @@ public class Tab2Controller {
 					box_client_all_fields.getItems().size()+") :");
 		});
 
-		box_api_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		box_api_methods.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue == null && newValue == null) return; // no change..
 			if (newValue == null) {
-				cascadeClearSelections(box_api_fields);
+				cascadeClearSelections(box_api_methods);
 				return;
 			}
 			box_client_fields_typed.setDisable(false);
@@ -209,12 +209,12 @@ public class Tab2Controller {
 
 	private void cascadeClearSelections(Node node) {
 		// multiple changes
-		if (Arrays.stream(new Node[]{box_api_fields, box_accessor}).anyMatch(n -> n == node)) {
+		if (Arrays.stream(new Node[]{box_api_methods, box_accessor}).anyMatch(n -> n == node)) {
 			box_client_all_fields.getSelectionModel().clearSelection();
 			box_client_fields_typed.getSelectionModel().clearSelection();
 		}
 		if (node == box_accessor) { // single change
-			box_api_fields.getSelectionModel().clearSelection();
+			box_api_methods.getSelectionModel().clearSelection();
 			text_client_class.setText("?");
 		}
 		if (node == box_client_all_fields) {
@@ -243,7 +243,7 @@ public class Tab2Controller {
 
 	@FXML void onAction(ActionEvent e) {
 		if (e.getTarget() == button_bind_getter) {
-			JavaField apiField = box_api_fields.getSelectionModel().getSelectedItem();
+			JavaField apiField = box_api_methods.getSelectionModel().getSelectedItem();
 			if (apiField == null) {
 				Notifications.create().text("You need to select an API Field to bind!").showWarning();
 				return;
@@ -277,8 +277,8 @@ public class Tab2Controller {
 				.collect(Collectors.toCollection(() -> new ArrayList<>(0)));
 		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val
 		box_accessor.setItems(FXCollections.observableArrayList(items));
-		box_api_fields.getSelectionModel().clearSelection();
-		box_api_fields.setItems(FXCollections.observableArrayList());
+		box_api_methods.getSelectionModel().clearSelection();
+		box_api_methods.setItems(FXCollections.observableArrayList());
 		box_client_fields_typed.getSelectionModel().clearSelection();
 		box_client_fields_typed.setItems(FXCollections.observableArrayList());
 		box_client_all_fields.getSelectionModel().clearSelection();
