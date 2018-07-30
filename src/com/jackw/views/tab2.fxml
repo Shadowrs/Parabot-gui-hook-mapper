@@ -4,7 +4,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -22,38 +23,53 @@
       <Label layoutX="36.0" layoutY="71.0" text="1. Accessor: " />
       <ChoiceBox fx:id="box_accessor" layoutX="120.0" layoutY="67.0" prefWidth="150.0" />
       <Label fx:id="label_api_fields" layoutX="36.0" layoutY="105.0" text="2. Available API methods:" />
-      <ChoiceBox fx:id="box_api_methods" disable="true" layoutX="195.0" layoutY="101.0" prefHeight="25.0" prefWidth="343.0" />
+      <ChoiceBox fx:id="box_api_methods" disable="true" layoutX="195.0" layoutY="101.0" prefHeight="25.0" prefWidth="175.0" />
       <Label layoutX="288.0" layoutY="71.0" text="Associated Client Class:" />
       <TextField fx:id="text_client_class" editable="false" layoutX="415.0" layoutY="67.0" prefHeight="25.0" prefWidth="170.0" text="?" />
       <Label fx:id="label_client_fields_typed" layoutX="36.0" layoutY="140.0" text="3. Available Client Fields by Type:" />
-      <ChoiceBox fx:id="box_client_fields_typed" disable="true" layoutX="242.0" layoutY="136.0" prefHeight="25.0" prefWidth="296.0" />
+      <ChoiceBox fx:id="box_client_fields_typed" disable="true" layoutX="242.0" layoutY="136.0" prefHeight="25.0" prefWidth="189.0" />
       <Label fx:id="label_all_client_fields" layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Class Fields:" />
-      <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="242.0" layoutY="172.0" prefHeight="25.0" prefWidth="296.0" />
+      <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="242.0" layoutY="172.0" prefHeight="25.0" prefWidth="189.0" />
       <Button fx:id="button_bind_getter" layoutX="423.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Getter" />
-      <Separator layoutY="295.0" prefHeight="3.0" prefWidth="601.0" />
-      <Label layoutX="20.0" layoutY="362.0" text="Existing Getter&#10;bindings" />
-      <TableView layoutX="106.0" layoutY="311.0" prefHeight="136.0" prefWidth="476.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Accessor" />
-          <TableColumn prefWidth="75.0" text="Field" />
-            <TableColumn prefWidth="75.0" text="Type" />
-            <TableColumn prefWidth="75.0" text="Cl. Class" />
-            <TableColumn prefWidth="75.0" text="Cl. Field" />
-            <TableColumn prefWidth="75.0" text="Cl. F. Type" />
-        </columns>
-      </TableView>
-      <Label layoutX="21.0" layoutY="514.0" text="Existing Setter&#10;bindings" />
-      <TableView layoutX="106.0" layoutY="463.0" prefHeight="136.0" prefWidth="476.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="Accessor" />
-            <TableColumn prefWidth="75.0" text="Field" />
-            <TableColumn prefWidth="75.0" text="Type" />
-            <TableColumn prefWidth="75.0" text="Cl. Class" />
-            <TableColumn prefWidth="75.0" text="Cl. Field" />
-            <TableColumn prefWidth="75.0" text="Cl. F. Type" />
-         </columns>
-      </TableView>
+
       <Button fx:id="button_setter" layoutX="343.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Setter" />
       <CheckBox fx:id="tickbox_static" layoutX="179.0" layoutY="259.0" mnemonicParsing="false" onAction="#onAction" text="Make new method static" />
+      <TabPane fx:id="tabpane_hooks" layoutX="70.0" layoutY="294.0" prefHeight="319.0" prefWidth="602.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="294.0">
+        <tabs>
+          <Tab fx:id="tab1" text="Getter Hooks">
+            <content>
+              <AnchorPane fx:id="tab1pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <Label text="Existing Getter bindings" />
+                  <TableView layoutX="51.0" layoutY="89.0" prefHeight="136.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <columns>
+                          <TableColumn prefWidth="75.0" text="Accessor" />
+                          <TableColumn prefWidth="75.0" text="Field" />
+                          <TableColumn prefWidth="75.0" text="Type" />
+                          <TableColumn prefWidth="75.0" text="Cl. Class" />
+                          <TableColumn prefWidth="75.0" text="Cl. Field" />
+                          <TableColumn prefWidth="75.0" text="Cl. F. Type" />
+                      </columns>
+                  </TableView>
+              </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tab2" text="Setter Hooks">
+            <content>
+              <AnchorPane fx:id="tab2pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <TableView prefHeight="290.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <columns>
+                          <TableColumn prefWidth="75.0" text="Accessor" />
+                          <TableColumn prefWidth="75.0" text="Field" />
+                          <TableColumn prefWidth="75.0" text="Type" />
+                          <TableColumn prefWidth="75.0" text="Cl. Class" />
+                          <TableColumn prefWidth="75.0" text="Cl. Field" />
+                          <TableColumn prefWidth="75.0" text="Cl. F. Type" />
+                      </columns>
+                  </TableView>
+              </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

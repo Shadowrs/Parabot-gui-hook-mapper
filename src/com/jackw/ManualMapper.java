@@ -114,7 +114,7 @@ public class ManualMapper extends Application {
 	}
 
 	public void resizeTo(double width, double height) {
-		getStage().setWidth(width);
-		getStage().setHeight(height);
+		/*getStage().setWidth(width);
+		getStage().setHeight(height);*/
 	}
 }

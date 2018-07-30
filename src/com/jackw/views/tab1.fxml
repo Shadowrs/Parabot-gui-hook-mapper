@@ -12,9 +12,9 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="365.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
+<AnchorPane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="365.0" minWidth="587.0" prefHeight="365.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.Tab1Controller">
    <children>
-      <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="217.0">
+      <TableView fx:id="table1" layoutX="357.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="230.0" minWidth="217.0" prefHeight="230.0" prefWidth="217.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="357.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="117.0">
         <columns>
           <TableColumn fx:id="column1_apiInterClass" prefWidth="114.0" text="API Accesor" />
           <TableColumn fx:id="column2_clientClass" prefWidth="102.0" text="Client Class" />
@@ -26,7 +26,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" prefHeight="229.0" prefWidth="141.0">
+      <ListView fx:id="list1" layoutX="25.0" layoutY="117.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="229.0" minWidth="141.0" prefHeight="229.0" prefWidth="141.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="117.0">
          <contextMenu>
             <ContextMenu>
               <items>
@@ -38,7 +38,7 @@
             <Tooltip text="API Accessor classes appear here" />
          </tooltip>
       </ListView>
-      <ListView fx:id="list2" layoutX="181.0" layoutY="117.0" prefHeight="230.0" prefWidth="142.0">
+      <ListView fx:id="list2" layoutX="181.0" layoutY="117.0" minHeight="230.0" minWidth="142.0" prefHeight="230.0" prefWidth="142.0" AnchorPane.bottomAnchor="19.0" AnchorPane.topAnchor="117.0">
          <contextMenu>
             <ContextMenu>
               <items>
@@ -55,7 +55,7 @@
             <Tooltip text="Browse for a Parabot-api.jar" />
          </tooltip>
       </Button>
-      <Label fx:id="label_path_1" layoutX="234.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected" AnchorPane.rightAnchor="26.0">
+      <Label fx:id="label_path_1" layoutX="263.0" layoutY="18.0" prefHeight="17.0" prefWidth="311.0" text="No API JAR selected">
          <padding>
             <Insets right="5.0" />
          </padding>

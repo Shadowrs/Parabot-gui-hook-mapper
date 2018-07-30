@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="rootpane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jackw.controllers.MainController">
    <children>
-      <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane1" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="tab1" text="Accessors">
                <content>
