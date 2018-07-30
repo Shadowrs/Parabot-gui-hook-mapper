@@ -7,8 +7,6 @@ import com.jackw.model.dummyapi.JavaField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +40,7 @@ public class Tab2Controller {
 	}
 
 	private ManualMapper main;
+	private ClientClass current_assoc_class;
 
 	@FXML
 	public void initialize() {
@@ -102,6 +101,7 @@ public class Tab2Controller {
 
 		box_accessor.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null) {
+				current_assoc_class = null;
 				//System.err.println("how does this happen "+oldValue.name);
 				return;
 			}
@@ -124,7 +124,8 @@ public class Tab2Controller {
 			box_client_all_fields.setDisable(false);
 
 			long s1 = System.currentTimeMillis();
-			list = main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().get().getFields();
+			current_assoc_class = main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().get();
+			list = current_assoc_class.getFields();
 			Logger.warning("Tab2Controller", "Generated List<JField> in "+(System.currentTimeMillis()-s1)+"ms");
 
 			long s = System.currentTimeMillis();
@@ -141,19 +142,11 @@ public class Tab2Controller {
 		});
 
 		box_api_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null) return;
 			box_client_fields_typed.setDisable(false);
 
-			Tab1Controller.InterfaceBind ib = main.tab1().table1.getItems()
-					.filtered(pbLink -> pbLink.getClientClass().equals(text_client_class.getText()))
-					.get(0);
-
 			System.out.println("Looking for matches of "+newValue.getDisplayForASMType());
-			main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().ifPresent(
-					clientClass -> box_client_fields_typed.setItems(FXCollections.observableArrayList(
-							clientClass.getFields().stream().filter(f -> f.typeMatch(newValue))
-									.collect(Collectors.toList())
-							)
-					));
+			box_client_fields_typed.setItems(FXCollections.observableArrayList(current_assoc_class.getFields().stream().filter(f -> f.typeMatch(newValue)).collect(Collectors.toList())));
 
 			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");

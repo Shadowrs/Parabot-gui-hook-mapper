@@ -43,13 +43,21 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	public boolean typeMatch(JavaField other) {
+		//System.out.println("[MATCHING] "+getDisplayForASMType()+" ["+desc()+"] .vs "+other.getDisplayForASMType()+" "+other.desc());
+		// [MATCHING] headIcon | Int [I] .vs getHeadIcon | Int ()I
 		return other != null && (
 				(type != null && other.type != null && type == other.type)
 				|| (fieldNode != null && other.fieldNode != null && other.fieldNode.desc.equals(fieldNode.desc))
 				|| (methodNode != null && other.methodNode != null && other.methodNode.desc.equals(methodNode.desc))
 				|| (fieldNode != null && other.methodNode != null && fieldNode.desc.equals(other.methodNode.desc))
 				|| (methodNode != null && other.fieldNode != null && methodNode.desc.equals(other.fieldNode.desc))
+				|| (fieldNode != null && other.methodNode != null && descToTypeOnly(other.methodNode.desc).equals(descToTypeOnly(fieldNode.desc)))
+				|| (methodNode != null && other.fieldNode != null && descToTypeOnly(methodNode.desc).equals(descToTypeOnly(other.fieldNode.desc)))
 				);
+	}
+
+	private String desc() {
+		return methodNode != null ? methodNode.desc : fieldNode != null ? fieldNode.desc : type.toString();
 	}
 
 	@Override
