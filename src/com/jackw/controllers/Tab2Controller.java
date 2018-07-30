@@ -146,7 +146,7 @@ public class Tab2Controller {
 			box_client_fields_typed.setDisable(false);
 
 			System.out.println("Looking for matches of "+newValue.getDisplayForASMType());
-			box_client_fields_typed.setItems(FXCollections.observableArrayList(current_assoc_class.getFields().stream().filter(f -> f.typeMatch(newValue)).collect(Collectors.toList())));
+			box_client_fields_typed.setItems(FXCollections.observableArrayList(current_assoc_class.getFields().stream().filter(newValue::typeMatch).collect(Collectors.toList())));
 
 			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");

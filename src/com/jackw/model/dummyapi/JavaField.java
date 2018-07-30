@@ -68,7 +68,8 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	private String getDisplayForApiMethodType() {
-		return name+argsToString()+" | "+ descToTypeOnly(methodNode.desc);
+		String args = argsToString();
+		return descToTypeOnly(methodNode.desc)+" "+name+(args.length() == 0 ? "()" : args);
 	}
 
 	private String argsToString() {
@@ -76,7 +77,7 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	private String getDisplayForFieldType() {
-		return name+" | "+ descToTypeOnly(fieldNode.desc);
+		return descToTypeOnly(fieldNode.desc)+" "+name+"()";
 	}
 
 	private String descToTypeOnly(String desc) {
@@ -139,7 +140,7 @@ public class JavaField implements Comparable<JavaField> {
 		if (argumentTypes == null || argumentTypes.length == 0)
 			return "";
 		StringBuilder sb = new StringBuilder();
-		sb.append(" (");
+		sb.append("(");
 		for (Type a : argumentTypes) {
 			String desc = a.getDescriptor();
 			int arrayDimensions = 0;
