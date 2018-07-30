@@ -47,8 +47,9 @@ public class JavaField implements Comparable<JavaField> {
 				(type != null && other.type != null && type == other.type)
 				|| (fieldNode != null && other.fieldNode != null && other.fieldNode.desc.equals(fieldNode.desc))
 				|| (methodNode != null && other.methodNode != null && other.methodNode.desc.equals(methodNode.desc))
+				|| (fieldNode != null && other.methodNode != null && fieldNode.desc.equals(other.methodNode.desc))
+				|| (methodNode != null && other.fieldNode != null && methodNode.desc.equals(other.fieldNode.desc))
 				);
-		// TODO field to method.. if needed? senario: Client->client -> click client on tab 2.
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class JavaField implements Comparable<JavaField> {
 		return this.name.compareTo(o.name);
 	}
 
-	public String getDisplayForApiMethodType() {
+	private String getDisplayForApiMethodType() {
 		return name+argsToString()+" | "+ descToTypeOnly(methodNode.desc);
 	}
 
@@ -66,7 +67,7 @@ public class JavaField implements Comparable<JavaField> {
 		return argsToString(Type.getArgumentTypes(methodNode.desc));
 	}
 
-	public String getDisplayForFieldType() {
+	private String getDisplayForFieldType() {
 		return name+" | "+ descToTypeOnly(fieldNode.desc);
 	}
 
@@ -192,7 +193,7 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	public String getDisplayForASMType() {
-		return name+" | "+(methodNode != null ? descToTypeOnly(methodNode.desc) : fieldNode != null ? descToTypeOnly(fieldNode.desc) : type != null ? type.toString() : "???");
+		return methodNode != null ? getDisplayForApiMethodType() : fieldNode != null ? getDisplayForFieldType() : name+" | "+type;
 	}
 
 	public boolean typeNotVoid() {

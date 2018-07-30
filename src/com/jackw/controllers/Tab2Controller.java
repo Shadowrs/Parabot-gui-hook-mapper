@@ -2,11 +2,13 @@ package com.jackw.controllers;
 
 import com.jackw.ManualMapper;
 import com.jackw.model.dummyapi.ApiInterface;
+import com.jackw.model.dummyapi.ClientClass;
 import com.jackw.model.dummyapi.JavaField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,7 +66,7 @@ public class Tab2Controller {
 		box_api_fields.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.getDisplayForApiMethodType();
+				return object.getDisplayForASMType();
 			}
 
 			@Override
@@ -77,7 +79,7 @@ public class Tab2Controller {
 		box_client_fields_typed.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.getDisplayForFieldType();
+				return object.getDisplayForASMType();
 			}
 
 			@Override
@@ -89,7 +91,7 @@ public class Tab2Controller {
 		box_client_all_fields.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
-				return object.getDisplayForFieldType();
+				return object.getDisplayForASMType();
 			}
 
 			@Override
@@ -145,10 +147,14 @@ public class Tab2Controller {
 					.filtered(pbLink -> pbLink.getClientClass().equals(text_client_class.getText()))
 					.get(0);
 
-			//Optional<ClientClass> x = Optional.ofNullable(main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst());
-			//if (x.isPresent()) {
-				//box_client_fields_typed.setItems(FXCollections.observableArrayList(x.get().getFields().stream().filter(f -> f.typeMatch(newValue)).collect(Collectors.toList())));
-			//}
+			System.out.println("Looking for matches of "+newValue.getDisplayForASMType());
+			main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().ifPresent(
+					clientClass -> box_client_fields_typed.setItems(FXCollections.observableArrayList(
+							clientClass.getFields().stream().filter(f -> f.typeMatch(newValue))
+									.collect(Collectors.toList())
+							)
+					));
+
 			label_client_fields_typed.setText("3. "+ text_client_class.getText()+" Fields by Type ("+
 					box_client_fields_typed.getItems().size()+") :");
 
