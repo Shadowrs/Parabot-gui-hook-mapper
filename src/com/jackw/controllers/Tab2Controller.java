@@ -104,8 +104,9 @@ public class Tab2Controller {
 				return;
 			}
 			box_api_fields.setDisable(false);
-			box_api_fields.setItems(newValue.getMethods(javaField -> javaField.typeNotVoid()));
-			label_api_fields.setText("2. Available API methods ("+newValue.fieldCount()+") :");
+			ObservableList<JavaField> list = newValue.getMethods(javaField -> javaField.typeNotVoid());
+			box_api_fields.setItems(list);
+			label_api_fields.setText("2. Available API methods ("+list.size()+") :");
 			label_client_fields_typed.setText("3. Available Client Fields by Type:");
 
 			System.out.println(newValue.name+" v "+ Arrays.toString((String[])main.tab1().table1.getItems().stream()
@@ -121,9 +122,7 @@ public class Tab2Controller {
 			box_client_all_fields.setDisable(false);
 
 			long s1 = System.currentTimeMillis();
-			ObservableList<JavaField> list =
-					main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass()))
-							.findFirst().get().getFields();
+			list = main.data.client.entries.stream().filter(c -> c.name.equals(ib.getClientClass())).findFirst().get().getFields();
 			Logger.warning("Tab2Controller", "Generated List<JField> in "+(System.currentTimeMillis()-s1)+"ms");
 
 			long s = System.currentTimeMillis();

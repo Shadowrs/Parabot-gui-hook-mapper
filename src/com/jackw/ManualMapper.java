@@ -15,6 +15,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class ManualMapper extends Application {
@@ -65,6 +66,7 @@ public class ManualMapper extends Application {
 		this.stage = stage;
 		stage.setTitle("Parabot Mapper");
 		stage.setScene(scene);
+		stage.getIcons().add(new Image(ManualMapper.class.getResourceAsStream("/parabot-icon.png")));
 		resizeTo(tab1().pane.getPrefWidth() + 15, tab1().pane.getPrefHeight() + 60);
 		stage.show();
 
