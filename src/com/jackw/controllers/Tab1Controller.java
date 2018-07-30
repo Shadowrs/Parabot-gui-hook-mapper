@@ -75,7 +75,7 @@ public class Tab1Controller {
 				data.pbApi.interfaces.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" methods"));
 				tt_apijarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
-				main.tab2().clearSelections();
+				main.tab2().updateAccessorsListItems();
 			}
 		}
 		else if (target == load_jar_client) {
@@ -89,7 +89,7 @@ public class Tab1Controller {
 				data.client.entries.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" fields | "+i.interfaceCountASM()+" interfaces | "+i.methodCountASM()+" methods"));
 				tt_clientjarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
-				main.tab2().clearSelections();
+				main.tab2().updateAccessorsListItems();
 			}
 		} else if (target == menuitem_link_api_interface) {
 			bind();
@@ -245,7 +245,7 @@ public class Tab1Controller {
 									contains("parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
 							main.tab1().table1.getItems().clear();
 							main.tab1().table1.getSelectionModel().clearSelection();
-							main.tab2().clearSelections();
+							main.tab2().updateAccessorsListItems();
 						});
 						items.add(menuItem);
 					});
@@ -273,7 +273,7 @@ public class Tab1Controller {
 							f.getAbsolutePath()).show();
 					main.tab1().table1.getItems().clear();
 					main.tab1().table1.getSelectionModel().clearSelection();
-					main.tab2().clearSelections();
+					main.tab2().updateAccessorsListItems();
 					if (!xRecent.contains(f.toPath()))
 						xRecent.add(f.toPath());
 				}
@@ -299,7 +299,7 @@ public class Tab1Controller {
 			table1.getItems().remove(ib);
 			Notifications.create().title("Parabot Mapper")
 					.text(String.format("Unbound [%s : %s]", ib.getApiClass(), ib.getClientClass())).show();
-			main.tab2().clearSelections();
+			main.tab2().updateAccessorsListItems();
 		});
 		menu.getItems().addAll(mi);
 

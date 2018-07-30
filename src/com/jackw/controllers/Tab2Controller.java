@@ -268,8 +268,15 @@ public class Tab2Controller {
 		}
 	}
 
-	public void clearSelections() {
-		updateAccessorsListItems();
+	public void updateAccessorsListItems() {
+		// Map The Column cells in Tab1 Table1 (String: Accessor names) to actual accessor instances in list1.
+		List<ApiInterface> items = main.tab1().table1.getItems().stream()
+				.map(Tab1Controller.InterfaceBind::getApiClass)
+				.map(e -> main.tab1().list1.getItems().stream()
+						.filter(i -> i.name.equals(e)).findFirst().get())
+				.collect(Collectors.toCollection(() -> new ArrayList<>(0)));
+		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val
+		box_accessor.setItems(FXCollections.observableArrayList(items));
 		box_api_fields.getSelectionModel().clearSelection();
 		box_api_fields.setItems(FXCollections.observableArrayList());
 		box_client_fields_typed.getSelectionModel().clearSelection();
@@ -280,16 +287,5 @@ public class Tab2Controller {
 		label_api_fields.setText("2. Available API methods:");
 		label_client_fields_typed.setText("3. Available Client Fields by Type:");
 		label_all_client_fields.setText("3. Alternative: All Client Class Fields:");
-	}
-
-	public void updateAccessorsListItems() {
-		// Map The Column cells in Tab1 Table1 (String: Accessor names) to actual accessor instances in list1.
-		List<ApiInterface> items = main.tab1().table1.getItems().stream()
-				.map(Tab1Controller.InterfaceBind::getApiClass)
-				.map(e -> main.tab1().list1.getItems().stream()
-						.filter(i -> i.name.equals(e)).findFirst().get())
-				.collect(Collectors.toCollection(() -> new ArrayList<>(0)));
-		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val
-		box_accessor.setItems(FXCollections.observableArrayList(items));
 	}
 }
