@@ -1,7 +1,6 @@
 package com.jackw.model.dummyapi;
 
-import java.util.Arrays;
-import jdk.internal.org.objectweb.asm.Type;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -60,32 +59,80 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	public String getDisplayForApiMethodType() {
-		return name+" | "+methodNode.desc;
+		return name+argsToString()+" | "+ descToTypeOnly(methodNode.desc);
+	}
+
+	private String argsToString() {
+		return argsToString(Type.getArgumentTypes(methodNode.desc));
 	}
 
 	public String getDisplayForFieldType() {
-		return name+" | "+descToJava(fieldNode.desc);
+		return name+" | "+ descToTypeOnly(fieldNode.desc);
 	}
 
-	// method = ()Ljava/lang/String;
-	// field = Ljava/lang/String;
-	// field = [I
-	private String descToJava(String desc) {
+	private String descToTypeOnly(String desc) {
 		if (desc.startsWith("(")) { // METHOD
-			System.out.println(Arrays.toString(Type.getArgumentTypes(desc)));
-			String params = desc.substring(1, desc.lastIndexOf(")")+1);
-			System.out.println("[JField] params = "+params);
-			if (params.contains(";")) {
-				String[] objs = params.split(";");
-				System.out.println("\t"+Arrays.toString(objs));
+			desc = desc.substring(desc.lastIndexOf(")")+1);
+		}
+		int arrayDimensions = 0;
+		if (desc.startsWith("[")) {
+			int curChar = 0;
+			while (desc.charAt(curChar++) == "[".charAt(0)) {
+				arrayDimensions++;
 			}
-			// TODO argument parsing
+		}
+		StringBuilder arrayExtension = new StringBuilder();
+		while (arrayDimensions-- > 0) {
+			arrayExtension.append("[]");
+		}
+		desc = desc.replace("[", "");
 
-			desc = desc.substring(desc.indexOf("L") + 1);
-			if (desc.length() > 1) { // object ref / class
-				return desc.substring(0, desc.length() - 1); // remove ; at end
-			}
-		} else { // FIELD
+		desc = desc.substring(desc.indexOf("L") + 1);
+		if (desc.length() > 1) { // object ref / class
+			desc = desc.substring(desc.lastIndexOf("/")+1);
+			return desc.substring(0, desc.length() - 1) + arrayExtension.toString(); // remove ; at end
+		}
+		final char c = desc.charAt(0);
+		String type = "";
+		switch (c) {
+			case 'I': // INT
+				type = "Int";
+				break;
+			case 'Z': // BOOLEAN
+				type = "Boolean";
+				break;
+			case 'B': // byte
+				type = "Byte";
+				break;
+			case 'S': // short
+				type = "Short";
+				break;
+			case 'C': // char (see Type.BOOLEAN_TYPE ASM sources)
+				type = "Char";
+				break;
+			case 'J':
+				type = "Long";
+				break;
+			case 'F':
+				type = "Float";
+				break;
+			case 'D':
+				type = "Double";
+				break;
+			case 'V': // void, method desc
+				type = "Void";
+				break;
+		}
+		return type + arrayExtension.toString();
+	}
+
+	private String argsToString(Type[] argumentTypes) {
+		if (argumentTypes == null || argumentTypes.length == 0)
+			return "";
+		StringBuilder sb = new StringBuilder();
+		sb.append(" (");
+		for (Type a : argumentTypes) {
+			String desc = a.getDescriptor();
 			int arrayDimensions = 0;
 			if (desc.startsWith("[")) {
 				int curChar = 0;
@@ -96,42 +143,56 @@ public class JavaField implements Comparable<JavaField> {
 			while (arrayDimensions-- > 0)
 				arrayExtension.append("[]");
 			desc = desc.replace("[", "");
+			String arrayEx = arrayExtension.toString();
 
-			desc = desc.substring(desc.indexOf("L") + 1);
-			if (desc.length() > 1) { // object ref / class
-				desc = desc.substring(desc.lastIndexOf("/")+1);
-				return desc.substring(0, desc.length() - 1) + arrayExtension.toString(); // remove ; at end
-			}
-			final char c = desc.charAt(0);
 			String type = "";
-			switch (c) {
-				case 'I':
-				case 'Z':
-				case 'B':
-				case 'S':
-				case 'C':
-					type = "Integer";
+			switch (desc.charAt(0)) {
+				case 'I': // INT
+					type = "int";
+					break;
+				case 'Z': // BOOLEAN
+					type = "boolean";
+					break;
+				case 'B': // byte
+					type = "byte";
+					break;
+				case 'S': // short
+					type = "short";
+					break;
+				case 'C': // char (see Type.BOOLEAN_TYPE ASM sources)
+					type = "char";
 					break;
 				case 'J':
-					type = "Long";
+					type = "long";
 					break;
 				case 'F':
-					type = "Float";
+					type = "float";
 					break;
 				case 'D':
-					type = "Double";
+					type = "double";
 					break;
-				case 'V': // void, method desc
-					type = "Void";
+				case 'V':
+					type = "void";
+					break;
+				case 'L':
+					type = desc.substring(1, desc.lastIndexOf(";"));
+					if (type.contains("/")) // in a dir
+						type = type.substring(type.lastIndexOf("/")+1);
 					break;
 			}
-			return type + arrayExtension.toString();
+			sb.append(type+arrayEx+", ");
 		}
-		return "???="+desc;
+		/*System.out.println("Types: "+Arrays.toString(Arrays.stream(argumentTypes)
+				.map(a -> "\n"+a.toString()+" , "+a.getDescriptor()+" , "+a.getClassName()+" , "+a.getSort())
+				.collect(Collectors.toList())
+				.toArray(new String[0])));*/
+
+		sb.append(")");
+		return sb.toString().replace(", )", ")");
 	}
 
 	public String getDisplayForASMType() {
-		return name+" | "+(methodNode != null ? descToJava(methodNode.desc) : fieldNode != null ? descToJava(fieldNode.desc) : type != null ? type.toString() : "???");
+		return name+" | "+(methodNode != null ? descToTypeOnly(methodNode.desc) : fieldNode != null ? descToTypeOnly(fieldNode.desc) : type != null ? type.toString() : "???");
 	}
 
 	public boolean typeNotVoid() {

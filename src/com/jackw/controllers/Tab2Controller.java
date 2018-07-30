@@ -104,7 +104,7 @@ public class Tab2Controller {
 				return;
 			}
 			box_api_fields.setDisable(false);
-			ObservableList<JavaField> list = newValue.getMethods(javaField -> javaField.typeNotVoid());
+			ObservableList<JavaField> list = newValue.getMethods();
 			box_api_fields.setItems(list);
 			label_api_fields.setText("2. Available API methods ("+list.size()+") :");
 			label_client_fields_typed.setText("3. Available Client Fields by Type:");

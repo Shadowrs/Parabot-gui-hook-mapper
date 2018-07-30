@@ -227,19 +227,19 @@ public class Tab1Controller {
 						MenuItem menuItem = new MenuItem(f.getAbsolutePath());
 						menuItem.setOnAction(event1 -> {
 							if (api) {
-								data.pbApi = f.getAbsolutePath().contains("Parabot") ?
+								data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 										new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
 								main.tab1().list1.getSelectionModel().clearSelection();
 								main.tab1().list1.getItems().clear();
 							} else {
-								data.client = f.getAbsolutePath().contains("Parabot") ?
+								data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 										new RspsClient(false, f) : new RspsClient(f);
 								main.tab1().list2.getSelectionModel().clearSelection();
 								main.tab1().list2.getItems().clear();
 							}
 							label.setText(f.getAbsolutePath());
-							Notifications.create().title("Parabot Mapper").text("Loaded "+(f.getAbsolutePath().
-									contains("Parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
+							Notifications.create().title("Parabot Mapper").text("Loaded "+(f.getAbsolutePath().toLowerCase().
+									contains("parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
 							main.tab1().table1.getItems().clear();
 							main.tab1().table1.getSelectionModel().clearSelection();
 						});
@@ -254,12 +254,12 @@ public class Tab1Controller {
 				File f = fc.showOpenDialog(main.getStage());
 				if (f != null && f.getPath().endsWith(".jar")) {
 					if (api) {
-						data.pbApi = f.getAbsolutePath().contains("Parabot") ?
+						data.pbApi = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 								new PbApi(f, "org/rev317/min/accessors/") : new PbApi(f);
 						main.tab1().list1.getSelectionModel().clearSelection();
 						main.tab1().list1.getItems().clear();
 					} else {
-						data.client = f.getAbsolutePath().contains("Parabot") ?
+						data.client = f.getAbsolutePath().toLowerCase().contains("parabot") ?
 								new RspsClient(false, f) : new RspsClient(f);
 						main.tab1().list2.getSelectionModel().clearSelection();
 						main.tab1().list2.getItems().clear();

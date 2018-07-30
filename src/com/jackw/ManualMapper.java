@@ -74,6 +74,8 @@ public class ManualMapper extends Application {
 				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"pb-317-min-api.jar")
 				.toPath()); // dummy, fine with not existing
 		recentFiles.add(Paths.get("C:\\Users\\Jak\\Documents\\Parabot\\cache/RuneWild-api-2454733162.jar"));
+		recentFiles.add(Paths.get("C:\\Users\\Jak\\.m2\\repository\\org\\parabot\\317-api-minified\\1.21.3\\317-api-minified-1.21.3.jar"));
+
 		recentFiles2.add(new File(
 				System.getProperty("user.home")+ File.separator+"desktop"+File.separator+"dreamscape.jar")
 				.toPath());
