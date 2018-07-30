@@ -73,7 +73,7 @@ public class JavaField implements Comparable<JavaField> {
 	}
 
 	public String argsToString() {
-		return argsToString(Type.getArgumentTypes(methodNode.desc));
+		return methodNode != null ? argsToString(Type.getArgumentTypes(methodNode.desc)) : ""; // no args for field types
 	}
 
 	private String getDisplayForFieldType() {

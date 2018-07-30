@@ -88,12 +88,11 @@ public class ManualMapper extends Application {
 		tab1_controller.list1.getItems().addAll(data.pbApi.interfaces);
 		tab1_controller.list2.getItems().addAll(data.client.entries);
 
-		tab1_controller.table1.getItems().add(new Tab1Controller.InterfaceBind(data.pbApi.interfaces.get(0),
-				data.client.entries.get(0)));
-		tab1_controller.table1.getItems().add(new Tab1Controller.InterfaceBind(data.pbApi.interfaces.get(1),
-				data.client.entries.get(1)));
-		tab1_controller.table1.getItems().add(new Tab1Controller.InterfaceBind(data.pbApi.interfaces.get(2),
-				data.client.entries.get(2)));
+		for (int i = 0; i < 3; i++) {
+			tab1().list1.getSelectionModel().select(i);
+			tab1().list2.getSelectionModel().select(i);
+			tab1().bind();
+		}
 
 		tab2_controller.unlockPanel();
 

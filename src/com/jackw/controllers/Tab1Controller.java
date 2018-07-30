@@ -75,6 +75,7 @@ public class Tab1Controller {
 				data.pbApi.interfaces.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" methods"));
 				tt_apijarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded API JAR-" + new Random().nextInt(100)).show();
+				main.tab2().clearSelections();
 			}
 		}
 		else if (target == load_jar_client) {
@@ -88,11 +89,12 @@ public class Tab1Controller {
 				data.client.entries.forEach(i -> sb.append("\n\t"+i.name+" has "+i.fieldCount()+" fields | "+i.interfaceCountASM()+" interfaces | "+i.methodCountASM()+" methods"));
 				tt_clientjarpath.setText(sb.toString());
 				Notifications.create().title("Parabot Mapper").text("Reloaded Client JAR-" + new Random().nextInt(100)).show();
+				main.tab2().clearSelections();
 			}
 		} else if (target == menuitem_link_api_interface) {
-			link();
+			bind();
 		} else if (target == menuitem_link_class) {
-			link();
+			bind();
 		} else if (target.toString().contains("id=checkbox_hide_inners")) {
 			list2.setItems(FXCollections.observableArrayList(data.client.getClasses(checkbox_hide_inners.isSelected())));
 			Logger.info("Tab1Controller", "Toggled hide inners");
@@ -103,7 +105,7 @@ public class Tab1Controller {
 		}
 	}
 
-	private void link() {
+	public void bind() {
 		ApiInterface x = list1.getSelectionModel().getSelectedItem();
 		ClientClass c = list2.getSelectionModel().getSelectedItem();
 		if (x == null || c == null) {
@@ -122,6 +124,7 @@ public class Tab1Controller {
 			table1.getItems().add(new InterfaceBind(x, c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 			main.tab2().unlockPanel();
+			main.tab2().updateAccessorsListItems();
 		}
 	}
 
@@ -242,6 +245,7 @@ public class Tab1Controller {
 									contains("parabot") ? "PARABOT" : "")+" API JAR at "+f.getAbsolutePath()).show();
 							main.tab1().table1.getItems().clear();
 							main.tab1().table1.getSelectionModel().clearSelection();
+							main.tab2().clearSelections();
 						});
 						items.add(menuItem);
 					});
@@ -269,6 +273,7 @@ public class Tab1Controller {
 							f.getAbsolutePath()).show();
 					main.tab1().table1.getItems().clear();
 					main.tab1().table1.getSelectionModel().clearSelection();
+					main.tab2().clearSelections();
 					if (!xRecent.contains(f.toPath()))
 						xRecent.add(f.toPath());
 				}
@@ -294,6 +299,7 @@ public class Tab1Controller {
 			table1.getItems().remove(ib);
 			Notifications.create().title("Parabot Mapper")
 					.text(String.format("Unbound [%s : %s]", ib.getApiClass(), ib.getClientClass())).show();
+			main.tab2().clearSelections();
 		});
 		menu.getItems().addAll(mi);
 
