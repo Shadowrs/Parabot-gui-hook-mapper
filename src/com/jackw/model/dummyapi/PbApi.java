@@ -31,6 +31,9 @@ public class PbApi {
 				new ApiInterface("NPC", new ArrayList<>(List.of(
 						new JavaField("getNpcDefinition()"),
 						new JavaField("getExamine()", FieldType.STRING)
+				))),
+				new ApiInterface("Item", new ArrayList<>(List.of(
+						new JavaField("getId()", FieldType.INT)
 				)))
 		)).stream().sorted().collect(Collectors.toList());
 	}

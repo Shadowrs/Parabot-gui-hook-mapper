@@ -3,15 +3,15 @@ package com.jackw;
 import com.jackw.controllers.MainController;
 import com.jackw.controllers.Tab1Controller;
 import com.jackw.controllers.Tab2Controller;
-import com.jackw.model.dummyapi.ApiData;
-import com.jackw.model.dummyapi.PbApi;
-import com.jackw.model.dummyapi.RspsClient;
+import com.jackw.model.dummyapi.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -88,11 +88,21 @@ public class ManualMapper extends Application {
 		tab1_controller.list1.getItems().addAll(data.pbApi.interfaces);
 		tab1_controller.list2.getItems().addAll(data.client.entries);
 
-		for (int i = 0; i < 3; i++) {
-			tab1().list1.getSelectionModel().select(i);
-			tab1().list2.getSelectionModel().select(i);
-			tab1().bind();
-		}
+		String[][] dummyLinks = {
+				{"Player", "a.class"},
+				{"Character", "b.class"},
+				{"NPC", "c.class"},
+				{"Item", "f.class"}
+		};
+		Arrays.stream(dummyLinks).forEach(d -> {
+			Optional<ApiInterface> api = tab1().list1.getItems().stream().filter(accessor -> accessor.name.equals(d[0])).findFirst();
+			Optional<ClientClass> clientClass = tab1().list2.getItems().stream().filter(clientClass1 -> clientClass1.name.equals(d[1])).findFirst();
+			if (api.isPresent() && clientClass.isPresent()) {
+				tab1().list1.getSelectionModel().select(api.get());
+				tab1().list2.getSelectionModel().select(clientClass.get());
+				tab1().bind();
+			}
+		});
 
 		tab2_controller.unlockPanel();
 

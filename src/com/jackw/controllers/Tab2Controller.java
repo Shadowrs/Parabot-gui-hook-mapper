@@ -393,7 +393,7 @@ public class Tab2Controller {
 		// Map The Column cells in Tab1 Table1 (String: Accessor names) to actual accessor instances in list1.
 		List<ApiInterface> items = main.tab1().table1.getItems().stream()
 				.map(Tab1Controller.InterfaceBind::getApiClass)
-				.map(e -> main.tab1().list1.getItems().stream()
+				.map(e -> main.data.pbApi.interfaces.stream()
 						.filter(i -> i.name.equals(e)).findFirst().get())
 				.collect(Collectors.toCollection(() -> new ArrayList<>(0)));
 		box_accessor.getSelectionModel().clearSelection(); // otherwise NPE thrown by onSelectionChanged() due to null new val

@@ -118,6 +118,8 @@ public class Tab1Controller {
 			Notifications.create().title("Error").text(mes).showWarning();
 		}
 		else {
+			list1.getItems().remove(x);
+			list2.getItems().remove(c);
 			table1.getItems().add(new InterfaceBind(x, c));
 			System.out.println("added new PbLink. Total now "+table1.getItems().size()+". Columns: "+table1.getColumns().size());
 			main.tab2().unlockPanel();
@@ -132,10 +134,14 @@ public class Tab1Controller {
 	public static class InterfaceBind {
 		private final SimpleStringProperty apiClass;
 		private final SimpleStringProperty clientClass;
+		public final ApiInterface apiInterface;
+		public final ClientClass clientClassReal;
 
 		public InterfaceBind(ApiInterface apiInterface, ClientClass clientClass) {
 			apiClass = new SimpleStringProperty(apiInterface.name);
 			this.clientClass = new SimpleStringProperty(clientClass.name);
+			this.apiInterface = apiInterface;
+			clientClassReal = clientClass;
 		}
 
 		public String getApiClass() {
@@ -297,6 +303,8 @@ public class Tab1Controller {
 			Notifications.create().title("Parabot Mapper")
 					.text(String.format("Unbound [%s : %s]", ib.getApiClass(), ib.getClientClass())).show();
 			main.tab2().updateAccessorsListItems();
+			list1.getItems().add(ib.apiInterface);
+			list2.getItems().add(ib.clientClassReal);
 		});
 		menu.getItems().addAll(mi);
 

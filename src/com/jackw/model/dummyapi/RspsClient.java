@@ -21,7 +21,7 @@ public class RspsClient {
 						new JavaField("anInt2"), // dummy
 						new JavaField("aString1"), // name
 						new JavaField("aString4"), // dummy
-						new JavaField("RSPlayerAppearance"),
+						new JavaField("aRSPlayerAppearance"),
 						new JavaField("aStringArray1") // dummy
 				))),
 				// Character = b
@@ -31,12 +31,12 @@ public class RspsClient {
 						new JavaField("anInt6"), // z
 						new JavaField("aString2"), // dummy
 						new JavaField("aLong1"), // dummy
-						new JavaField("Model")
+						new JavaField("aModel")
 				))),
 				// NPC = c
 				new ClientClass("c.class", new ArrayList<>(List.of(
 						new JavaField("aLong2"), // dummy
-						new JavaField("NpcDefinition"),
+						new JavaField("aNpcDefinition"),
 						new JavaField("aString4") // examine
 				))),
 				// dummy
@@ -48,6 +48,12 @@ public class RspsClient {
 						new JavaField("anInt4"),
 						new JavaField("aString3"),
 						new JavaField("aLong4")
+				))),
+				// Item
+				new ClientClass("f.class", new ArrayList<>(List.of(
+						new JavaField("anInt7"), // id
+						new JavaField("aString5"), // name
+						new JavaField("aModel", FieldType.CLASS) // model
 				)))
 		)).stream().sorted().collect(Collectors.toList());
 	}
