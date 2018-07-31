@@ -30,10 +30,10 @@ public class Tab2Controller {
 	@FXML public Label label_steps_fixed;
 	@FXML public Label label_locked;
 	@FXML public AnchorPane rootpane;
-	@FXML public ChoiceBox<ApiInterface> box_accessor;
-	@FXML public ChoiceBox<JavaField> box_api_methods;
-	@FXML public ChoiceBox<JavaField> box_client_fields_typed;
-	@FXML public ChoiceBox<JavaField> box_client_all_fields;
+	@FXML public ComboBox<ApiInterface> box_accessor;
+	@FXML public ComboBox<JavaField> box_api_methods;
+	@FXML public ComboBox<JavaField> box_client_fields_typed;
+	@FXML public ComboBox<JavaField> box_client_all_fields;
 	@FXML public TextField text_client_class;
 	@FXML public Button button_bind_getter;
 	@FXML public Label label_api_fields;
@@ -80,6 +80,7 @@ public class Tab2Controller {
 		box_accessor.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(ApiInterface object) {
+				if (object == null) return "";
 				return object.name;
 			}
 
@@ -92,6 +93,7 @@ public class Tab2Controller {
 		box_api_methods.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
+				if (object == null) return "";
 				return object.getDisplayForASMType();
 			}
 
@@ -105,6 +107,7 @@ public class Tab2Controller {
 		box_client_fields_typed.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
+				if (object == null) return "";
 				return object.getDisplayForASMType();
 			}
 
@@ -117,6 +120,7 @@ public class Tab2Controller {
 		box_client_all_fields.setConverter(new StringConverter<>() {
 			@Override
 			public String toString(JavaField object) {
+				if (object == null) return "";
 				return object.getDisplayForASMType();
 			}
 
@@ -162,13 +166,13 @@ public class Tab2Controller {
 
 			long s = System.currentTimeMillis();
 			if (list.size() > 100) {
-				Logger.warning("Tab2Controller", "Setting inner Items of ChoiceBox - but count is "+list.size()+" -- this can be slow!");
+				Logger.warning("Tab2Controller", "Setting inner Items  - but count is "+list.size()+" -- this can be slow!");
 			}
 
 			box_client_all_fields.setItems(list);
 
 			if (list.size() > 100)
-				Logger.warning("Tab2Controller", "ChoiceBox Item list set in "+(System.currentTimeMillis()-s)+"ms");
+				Logger.warning("Tab2Controller", "Item list set in "+(System.currentTimeMillis()-s)+"ms");
 
 			text_client_class.setText(ib.getClientClass());
 
@@ -217,14 +221,14 @@ public class Tab2Controller {
 
 		box_client_fields_typed.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue == null && newValue == null) return; // no change..
-			// Special case: this has a 'brother' choicebox - cleared when this value is set to NotNull
+			// Special case: this has a 'brother' box - cleared when this value is set to NotNull
 			if (newValue != null)
 				cascadeClearSelections(box_client_fields_typed);
 		});
 
 		box_client_all_fields.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue == null && newValue == null) return; // no change..
-			// Special case: this has a 'brother' choicebox - cleared when this value is set to NotNull
+			// Special case: this has a 'brother' box - cleared when this value is set to NotNull
 			if (newValue != null)
 				cascadeClearSelections(box_client_all_fields);
 		});
