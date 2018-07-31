@@ -41,6 +41,7 @@ public class Tab2Controller {
 	@FXML public Label label_all_client_fields;
 	@FXML public CheckBox tickbox_static;
 	@FXML public Button button_setter;
+	@FXML public AnchorPane tab1pane;
 	@FXML public TableView<GetterHook> table1;
 	@FXML public TableColumn<GetterHook, String> table1_col1;
 	@FXML public TableColumn<GetterHook, String> table1_col2;
@@ -52,6 +53,10 @@ public class Tab2Controller {
 	@FXML public TableColumn<SetterHook, String> table2_col2;
 	@FXML public TableColumn<SetterHook, String> table2_col3;
 	@FXML public TableColumn<SetterHook, String> table2_col4;
+	@FXML public TableColumn<?, ?> col_api;
+	@FXML public TableColumn<?, ?> col_client;
+	@FXML public TableColumn<?, ?> col_api2;
+	@FXML public TableColumn<?, ?> col_client2;
 
 	public void setMain(ManualMapper main) {
 		this.main = main;
@@ -261,6 +266,21 @@ public class Tab2Controller {
 							).show();
 				}, table2.getSelectionModel()));
 
+		tab1pane.widthProperty().addListener((observable, oldValue, newValue) -> {
+			col_api.setPrefWidth(newValue.doubleValue() / 2);
+			col_client.setPrefWidth((newValue.doubleValue() / 2) - 3);
+			col_api2.setPrefWidth(newValue.doubleValue() / 2);
+			col_client2.setPrefWidth((newValue.doubleValue() / 2) - 3); // far right side
+			table1_col1.setPrefWidth(newValue.doubleValue() / 4);
+			table1_col2.setPrefWidth(newValue.doubleValue() / 4);
+			table1_col3.setPrefWidth(newValue.doubleValue() / 4);
+			table1_col4.setPrefWidth((newValue.doubleValue() / 4) - 6); // far right side
+			table2_col1.setPrefWidth(newValue.doubleValue() / 4);
+			table2_col2.setPrefWidth(newValue.doubleValue() / 4);
+			table2_col3.setPrefWidth(newValue.doubleValue() / 4);
+			table2_col4.setPrefWidth((newValue.doubleValue() / 4) - 6);
+		});
+
 		System.out.println("[Tab2 Controller] Init complete");
 
 	}
@@ -331,7 +351,7 @@ public class Tab2Controller {
 	}
 
 	@FXML void onAction(ActionEvent e) {
-		if (e.getTarget() == button_bind_getter) {
+		if (e.getTarget() == button_bind_getter || e.getTarget() == button_setter) {
 			JavaField apiField = box_api_methods.getSelectionModel().getSelectedItem();
 			if (apiField == null) {
 				Notifications.create().text("You need to select an API Field to bind!").showWarning();
@@ -344,10 +364,17 @@ public class Tab2Controller {
 				Notifications.create().text("You need to select a Client Field to bind!").showWarning();
 				return;
 			}
-			table1.getItems().add(new GetterHook(box_accessor.getSelectionModel().getSelectedItem(),
-					apiField,
-					current_assoc_class,
-					clientField));
+			if (e.getTarget() == button_setter) {
+				table2.getItems().add(new SetterHook(box_accessor.getSelectionModel().getSelectedItem(),
+						apiField,
+						current_assoc_class,
+						clientField));
+			} else {
+				table1.getItems().add(new GetterHook(box_accessor.getSelectionModel().getSelectedItem(),
+						apiField,
+						current_assoc_class,
+						clientField));
+			}
 			System.out.println(String.format("Accessor: %s.%s -> %s.%s", box_accessor.getSelectionModel().getSelectedItem().name,
 					apiField.name, current_assoc_class.name, clientField.name));
 		}

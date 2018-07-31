@@ -30,24 +30,24 @@
       <ChoiceBox fx:id="box_client_fields_typed" disable="true" layoutX="242.0" layoutY="136.0" prefHeight="25.0" prefWidth="189.0" />
       <Label fx:id="label_all_client_fields" layoutX="36.0" layoutY="176.0" text="3. Alternative: All Client Class Fields:" />
       <ChoiceBox fx:id="box_client_all_fields" disable="true" layoutX="242.0" layoutY="172.0" prefHeight="25.0" prefWidth="189.0" />
-      <Button fx:id="button_bind_getter" layoutX="423.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Getter" />
+      <Button fx:id="button_bind_getter" layoutX="344.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Getter" />
 
-      <Button fx:id="button_setter" layoutX="343.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Setter" />
+      <Button fx:id="button_setter" layoutX="431.0" layoutY="255.0" mnemonicParsing="false" onAction="#onAction" text="Bind Setter" />
       <CheckBox fx:id="tickbox_static" layoutX="179.0" layoutY="259.0" mnemonicParsing="false" onAction="#onAction" text="Make new method static" />
-      <TabPane fx:id="tabpane_hooks" layoutX="70.0" layoutY="294.0" prefHeight="319.0" prefWidth="602.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="294.0">
+      <TabPane fx:id="tabpane_hooks" layoutX="70.0" layoutY="294.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="294.0">
         <tabs>
           <Tab fx:id="tab1" text="Getter Hooks">
             <content>
               <AnchorPane fx:id="tab1pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                   <Label text="Existing Getter bindings" />
-                  <TableView fx:id="table1" layoutX="51.0" layoutY="89.0" prefHeight="136.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="table1" layoutX="51.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <columns>
-                          <TableColumn prefWidth="220.0" text="API">
+                          <TableColumn fx:id="col_api" prefWidth="-1.0" text="API">
                               <columns>
                                  <TableColumn fx:id="table1_col1" prefWidth="75.0" text="Accessor" />
                                 <TableColumn fx:id="table1_col2" prefWidth="75.0" text="Method" />
                               </columns></TableColumn>
-                          <TableColumn prefWidth="263.0" text="Client">
+                          <TableColumn fx:id="col_client" prefWidth="-1.0" text="Client">
                               <columns>
                                  <TableColumn fx:id="table1_col3" prefWidth="75.0" text="Class" />
                                 <TableColumn fx:id="table1_col4" prefWidth="75.0" text="Field" />
@@ -63,13 +63,13 @@
                      <children>
                         <TableView fx:id="table2" prefHeight="286.0" prefWidth="587.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="API">
+                              <TableColumn fx:id="col_api2" prefWidth="75.0" text="API">
                                  <columns>
                                     <TableColumn fx:id="table2_col1" prefWidth="75.0" text="Accessor" />
                                     <TableColumn fx:id="table2_col2" prefWidth="75.0" text="Method" />
                                  </columns>
                               </TableColumn>
-                              <TableColumn prefWidth="75.0" text="Client">
+                              <TableColumn fx:id="col_client2" prefWidth="75.0" text="Client">
                                  <columns>
                                     <TableColumn fx:id="table2_col3" prefWidth="75.0" text="Class" />
                                     <TableColumn fx:id="table2_col4" prefWidth="75.0" text="Field" />
