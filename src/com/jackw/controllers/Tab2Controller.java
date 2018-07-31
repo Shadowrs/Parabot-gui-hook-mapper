@@ -7,13 +7,19 @@ import com.jackw.model.dummyapi.JavaField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
@@ -35,9 +41,24 @@ public class Tab2Controller {
 	@FXML public Label label_all_client_fields;
 	@FXML public CheckBox tickbox_static;
 	@FXML public Button button_setter;
+	@FXML public TableView<GetterHook> table1;
+	@FXML public TableColumn<GetterHook, String> table1_col1;
+	@FXML public TableColumn<GetterHook, String> table1_col2;
+	@FXML public TableColumn<GetterHook, String> table1_col3;
+	@FXML public TableColumn<GetterHook, String> table1_col4;
+
+	@FXML public TableView<SetterHook> table2;
+	@FXML public TableColumn<SetterHook, String> table2_col1;
+	@FXML public TableColumn<SetterHook, String> table2_col2;
+	@FXML public TableColumn<SetterHook, String> table2_col3;
+	@FXML public TableColumn<SetterHook, String> table2_col4;
 
 	public void setMain(ManualMapper main) {
 		this.main = main;
+		postInit();
+	}
+
+	private void postInit() {
 	}
 
 	private ManualMapper main;
@@ -203,8 +224,77 @@ public class Tab2Controller {
 				cascadeClearSelections(box_client_all_fields);
 		});
 
+
+		table1_col1.setCellValueFactory(new PropertyValueFactory<>("accessor"));
+		table2_col1.setCellValueFactory(new PropertyValueFactory<>("accessor"));
+		table1_col2.setCellValueFactory(new PropertyValueFactory<>("method"));
+		table2_col2.setCellValueFactory(new PropertyValueFactory<>("method"));
+		table1_col3.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
+		table2_col3.setCellValueFactory(new PropertyValueFactory<>("clientClass"));
+		table1_col4.setCellValueFactory(new PropertyValueFactory<>("javaField"));
+		table2_col4.setCellValueFactory(new PropertyValueFactory<>("javaField"));
+
+		Arrays.asList(table1_col1, table1_col2, table1_col3, table1_col4).forEach(c ->
+				createContextMenuCellFactory(c,
+						getterHook -> {
+							table1.getItems().remove(getterHook);
+							Notifications.create().title("Parabot Mapper")
+									.text(String.format("Unbound %s : %s -> %s : %s",
+											getterHook.accessor.get(),
+											getterHook.method.get(),
+											getterHook.clientClass.get(),
+											getterHook.javaField.get()
+									))
+									.show();
+						}, table1.getSelectionModel()));
+
+		Arrays.asList(table2_col1, table2_col2, table2_col3, table2_col4).forEach(c -> createContextMenuCellFactory(c,
+				setterHook -> {
+					table2.getItems().remove(setterHook);
+					Notifications.create().title("Parabot Mapper")
+							.text(String.format("Unbound [%s : %s -> %s : %s]",
+									setterHook.accessor.get(),
+									setterHook.method.get(),
+									setterHook.clientClass.get(),
+									setterHook.javaField.get()
+									)
+							).show();
+				}, table2.getSelectionModel()));
+
 		System.out.println("[Tab2 Controller] Init complete");
 
+	}
+
+	private <T> void createContextMenuCellFactory(final TableColumn<T, String> col, final Consumer<T> consumer,
+												  final TableView.TableViewSelectionModel<T> model) {
+		final StringProperty contextMenuValue = new SimpleStringProperty("");
+		final ContextMenu menu = new ContextMenu();
+		final MenuItem mi = new MenuItem();
+		mi.textProperty().bind(Bindings.format("Unbind %s", contextMenuValue));
+		mi.setOnAction(event -> consumer.accept((T) model.getSelectedItem()));
+		menu.getItems().addAll(mi);
+
+		col.setCellFactory(param -> {
+			TableCell<?, String> cell = new TableCell<>() {
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (empty || item == null) {
+						setText(null);
+						setGraphic(null);
+					} else {
+						setText(item);
+					}
+				}
+			};
+			cell.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+				if (event.isSecondaryButtonDown() && !cell.isEmpty()) {
+					contextMenuValue.setValue(cell.getItem());
+					menu.show(cell, event.getScreenX(), event.getScreenY());
+				}
+			});
+			return (TableCell<T, String>) cell;
+		});
 	}
 
 	private void cascadeClearSelections(Node node) {
@@ -247,14 +337,19 @@ public class Tab2Controller {
 				Notifications.create().text("You need to select an API Field to bind!").showWarning();
 				return;
 			}
-			JavaField field = box_client_all_fields.getSelectionModel().getSelectedItem() != null ?
+			JavaField clientField = box_client_all_fields.getSelectionModel().getSelectedItem() != null ?
 			box_client_all_fields.getSelectionModel().getSelectedItem() :
 			box_client_fields_typed.getSelectionModel().getSelectedItem();
-			if (field == null) {
+			if (clientField == null) {
 				Notifications.create().text("You need to select a Client Field to bind!").showWarning();
 				return;
 			}
-			System.out.println("field: "+field.name+" to "+apiField.name);
+			table1.getItems().add(new GetterHook(box_accessor.getSelectionModel().getSelectedItem(),
+					apiField,
+					current_assoc_class,
+					clientField));
+			System.out.println(String.format("Accessor: %s.%s -> %s.%s", box_accessor.getSelectionModel().getSelectedItem().name,
+					apiField.name, current_assoc_class.name, clientField.name));
 		}
 		System.out.println(e.toString());
 	}
@@ -286,5 +381,97 @@ public class Tab2Controller {
 		label_api_fields.setText("2. Available API methods:");
 		label_client_fields_typed.setText("3. Available Client Fields by Type:");
 		label_all_client_fields.setText("3. Alternative: All Client Class Fields:");
+	}
+
+	public static class GetterHook {
+		public String getAccessor() {
+			return accessor.get();
+		}
+
+		public SimpleStringProperty accessorProperty() {
+			return accessor;
+		}
+
+		public String getMethod() {
+			return method.get();
+		}
+
+		public SimpleStringProperty methodProperty() {
+			return method;
+		}
+
+		public String getClientClass() {
+			return clientClass.get();
+		}
+
+		public SimpleStringProperty clientClassProperty() {
+			return clientClass;
+		}
+
+		public String getJavaField() {
+			return javaField.get();
+		}
+
+		public SimpleStringProperty javaFieldProperty() {
+			return javaField;
+		}
+
+		public final SimpleStringProperty accessor;
+		public final SimpleStringProperty method;
+		public final SimpleStringProperty clientClass;
+		public final SimpleStringProperty javaField;
+
+		public GetterHook(ApiInterface accessor, JavaField accessorMethod, ClientClass clientClass, JavaField clientField) {
+			this.accessor = new SimpleStringProperty(accessor.name);
+			this.method = new SimpleStringProperty(accessorMethod.name);
+			this.clientClass = new SimpleStringProperty(clientClass.name);
+			this.javaField = new SimpleStringProperty(clientField.name);
+		}
+	}
+
+	public static class SetterHook {
+		public String getAccessor() {
+			return accessor.get();
+		}
+
+		public SimpleStringProperty accessorProperty() {
+			return accessor;
+		}
+
+		public String getMethod() {
+			return method.get();
+		}
+
+		public SimpleStringProperty methodProperty() {
+			return method;
+		}
+
+		public String getClientClass() {
+			return clientClass.get();
+		}
+
+		public SimpleStringProperty clientClassProperty() {
+			return clientClass;
+		}
+
+		public String getJavaField() {
+			return javaField.get();
+		}
+
+		public SimpleStringProperty javaFieldProperty() {
+			return javaField;
+		}
+
+		public final SimpleStringProperty accessor;
+		public final SimpleStringProperty method;
+		public final SimpleStringProperty clientClass;
+		public final SimpleStringProperty javaField;
+
+		public SetterHook(ApiInterface accessor, JavaField accessorMethod, ClientClass clientClass, JavaField clientField) {
+			this.accessor = new SimpleStringProperty(accessor.name);
+			this.method = new SimpleStringProperty(accessorMethod.name);
+			this.clientClass = new SimpleStringProperty(clientClass.name);
+			this.javaField = new SimpleStringProperty(clientField.name);
+		}
 	}
 }

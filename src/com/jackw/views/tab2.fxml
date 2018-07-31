@@ -38,16 +38,20 @@
         <tabs>
           <Tab fx:id="tab1" text="Getter Hooks">
             <content>
-              <AnchorPane fx:id="tab1pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="tab1pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                   <Label text="Existing Getter bindings" />
-                  <TableView layoutX="51.0" layoutY="89.0" prefHeight="136.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="table1" layoutX="51.0" layoutY="89.0" prefHeight="136.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <columns>
-                          <TableColumn prefWidth="75.0" text="Accessor" />
-                          <TableColumn prefWidth="75.0" text="Field" />
-                          <TableColumn prefWidth="75.0" text="Type" />
-                          <TableColumn prefWidth="75.0" text="Cl. Class" />
-                          <TableColumn prefWidth="75.0" text="Cl. Field" />
-                          <TableColumn prefWidth="75.0" text="Cl. F. Type" />
+                          <TableColumn prefWidth="220.0" text="API">
+                              <columns>
+                                 <TableColumn fx:id="table1_col1" prefWidth="75.0" text="Accessor" />
+                                <TableColumn fx:id="table1_col2" prefWidth="75.0" text="Method" />
+                              </columns></TableColumn>
+                          <TableColumn prefWidth="263.0" text="Client">
+                              <columns>
+                                 <TableColumn fx:id="table1_col3" prefWidth="75.0" text="Class" />
+                                <TableColumn fx:id="table1_col4" prefWidth="75.0" text="Field" />
+                              </columns></TableColumn>
                       </columns>
                   </TableView>
               </AnchorPane>
@@ -56,16 +60,24 @@
           <Tab fx:id="tab2" text="Setter Hooks">
             <content>
               <AnchorPane fx:id="tab2pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <TableView prefHeight="290.0" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <columns>
-                          <TableColumn prefWidth="75.0" text="Accessor" />
-                          <TableColumn prefWidth="75.0" text="Field" />
-                          <TableColumn prefWidth="75.0" text="Type" />
-                          <TableColumn prefWidth="75.0" text="Cl. Class" />
-                          <TableColumn prefWidth="75.0" text="Cl. Field" />
-                          <TableColumn prefWidth="75.0" text="Cl. F. Type" />
-                      </columns>
-                  </TableView>
+                     <children>
+                        <TableView fx:id="table2" prefHeight="286.0" prefWidth="587.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="API">
+                                 <columns>
+                                    <TableColumn fx:id="table2_col1" prefWidth="75.0" text="Accessor" />
+                                    <TableColumn fx:id="table2_col2" prefWidth="75.0" text="Method" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn prefWidth="75.0" text="Client">
+                                 <columns>
+                                    <TableColumn fx:id="table2_col3" prefWidth="75.0" text="Class" />
+                                    <TableColumn fx:id="table2_col4" prefWidth="75.0" text="Field" />
+                                 </columns>
+                              </TableColumn>
+                           </columns>
+                        </TableView>
+                     </children>
               </AnchorPane>
             </content>
           </Tab>
